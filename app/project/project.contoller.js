@@ -84,15 +84,15 @@
     function addNewProject (){
       projVm.projectAction = "new";
       projVm.newproject = {
-        "name": "",
+        "name": "" ,
         "description": "",
         "label": "",
-        "owner":"Ivan",
-        "creationDate": "" //,
+        "owner":"Ivan"//,
+        //"creationDate": "" //,
         //"tags":[],
         //"collaborators":[]
       };
-      projVm.newproject.creationDate = $filter('date')(new Date(),'MM/dd/yyyy');
+      //projVm.newproject.creationDate = $filter('date')(new Date(),'MM/dd/yyyy');
     };
 
     function editProject(proj) {
