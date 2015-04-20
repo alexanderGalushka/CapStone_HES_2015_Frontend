@@ -4,13 +4,6 @@
 
 angular.module('adamServices', ['ngResource'])
 
-  .factory('deleteProject', function() {
-    return function (coll,item) {
-      var index = coll.indexOf(item);
-      coll.splice(index, 1);
-    }
-  })
-
   .service('activeProject', function() {
     var activeProject = this;
     activeProject.project = "";

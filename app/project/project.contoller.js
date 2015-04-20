@@ -6,8 +6,8 @@
     .controller('ProjectsCtrl', ProjectsCtrl);
 
 
-  ProjectsCtrl.$inject = ["$scope","deleteProject", "activeProject", "activePlate", "Project","$http", "$filter"];
-  function ProjectsCtrl($scope, deleteProject, activeProject, activePlate, Project,$http, $filter) {
+  ProjectsCtrl.$inject = ["$scope", "activeProject", "activePlate", "Project","$http", "$filter"];
+  function ProjectsCtrl($scope, activeProject, activePlate, Project,$http, $filter) {
     var projVm = this;
 
     $scope.ActiveProject = activeProject;
@@ -77,8 +77,12 @@
       }
     ];
 
-    function deletePr(coll1,indx1){
-      deleteProject(coll1,indx1);
+    function deletePr(coll,indexinp){
+      //deleteProject(coll,indexinp);
+
+      Project.delete({"id":indexinp.id});
+      var index = coll.indexOf(indexinp);
+      coll.splice(index, 1);
     };
 
     function addNewProject (){
@@ -87,7 +91,7 @@
         "name": "" ,
         "description": "",
         "label": "",
-        "owner":"Ivan"//,
+        //"owner":"Ivan",
         //"creationDate": "" //,
         //"tags":[],
         //"collaborators":[]
@@ -103,17 +107,19 @@
 
     function saveChangesProject(act,proj) {
       if (act == "new") {
-        Project.save(projVm.newproject);
-        projVm.projects = projVm.projects.concat(projVm.newproject);
+        var savedproj = Project.save(projVm.newproject);
+        projVm.projects = projVm.projects.concat(savedproj);
       }
       else {
+
+        Project.update({"id":projVm.newproject.id},projVm.newproject);
         proj.name = projVm.newproject.name;
         proj.description = projVm.newproject.description;
         proj.label = projVm.newproject.label;
-        proj.owner = projVm.newproject.owner;
-        proj.creationDate = projVm.newproject.creationDate  ;
-        proj.tags = projVm.newproject.tags;
-        proj.collaborators = projVm.newproject.collaborators;
+        //proj.owner = projVm.newproject.owner;
+        //proj.creationDate = projVm.newproject.creationDate  ;
+        //proj.tags = projVm.newproject.tags;
+        //proj.collaborators = projVm.newproject.collaborators;
       }
     };
 
