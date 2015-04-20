@@ -6,12 +6,13 @@
     .controller('ProjectsCtrl', ProjectsCtrl);
 
 
-  ProjectsCtrl.$inject = ["$scope", "activeProject", "activePlate", "Project","$http", "$filter"];
-  function ProjectsCtrl($scope, activeProject, activePlate, Project,$http, $filter) {
+  ProjectsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "Project","$http", "$filter"];
+  function ProjectsCtrl($scope, activeProject, activePlate, activePlateResult, Project,$http, $filter) {
     var projVm = this;
 
     $scope.ActiveProject = activeProject;
     $scope.ActivePlate = activePlate;
+    $scope.activePlateResult = activePlateResult;
 
     projVm.filterowner = '';
 
@@ -25,57 +26,7 @@
     projVm.deletePr = deletePr;
 
     projVm.projects = Project.query();
-
-    projVm.projects2 = [
-      {
-        "name": "Project b",
-        "description": "Cancer research in 2015",
-        "owner":"Cindy",
-        "tags":[{name:"multi projectadam"},{name:"mouse"}],
-        "collaborators":[{name:"Alex"},{name:"Ivan"},{name:"Gerson"}],
-        "label":"mouse","creationDate": "2/2/2015"
-      },
-      {
-        "name": "Project a",
-        "description": "Amazing new medicine",
-        "owner":"Nik",
-        "tags":[],
-        "collaborators":[{name:"Alex"},{name:"Ivan"},{name:"Cindy"}],
-        "label":"human","creationDate": "2/12/3015"
-      },
-      {
-        "name": "Aiv",
-        "description": "Painkiller medicine phase 3",
-        "owner":"Alex",
-        "tags":[],
-        "collaborators":[{name:"Alex"},{name:"Nik"},{name:"Cindy"}],
-        "label":"mouse","creationDate": "3/2/2015"
-      },
-      {
-        "name": "Zig medicine",
-        "description": "Building new research",
-        "owner":"Ivan",
-        "tags":[],
-        "collaborators":[{name:"Cindy"},{name:"Nik"},{name:"Gerson"}],
-        "label":"human","creationDate": "2/12/2015"
-      }
-    ];
     projVm.projectsDisplay = [].concat(projVm.projects);
-
-    projVm.collaborators = [
-      {
-        "name": "Alex"
-      },
-      {
-        "name": "Cindy"
-      },
-      {
-        "name": "Gerson"
-      },
-      {
-        "name": "Nik"
-      }
-    ];
 
     function deletePr(coll,indexinp){
       //deleteProject(coll,indexinp);
@@ -127,6 +78,7 @@
     function setActiveProject (proj){
       $scope.ActiveProject.project = proj;
       $scope.ActivePlate.plate  = "";
+      $scope.activePlateResult.plate  = "";
     };
 
     function addTag(tags,newTag){
@@ -135,7 +87,7 @@
 
     function checkedOwner(check){
       if (check)
-        projVm.filterowner = 'Ivan';
+        projVm.filterowner = 'ivan';
       else
         projVm.filterowner = '';
     };

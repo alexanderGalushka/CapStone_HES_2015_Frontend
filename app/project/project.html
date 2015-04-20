@@ -35,12 +35,12 @@
       </thead>
 
       <tbody>
-      <tr ng-repeat="project in projVm.projectsDisplay|filter:{owner:projVm.filterowner}" st-select-row="project" ng-click="projVm.setActiveProject(project.name)">
+      <tr ng-repeat="project in projVm.projectsDisplay" st-select-row="project" ng-click="projVm.setActiveProject(project.name)">
 
         <td>{{project.name}}</td>
         <td>{{project.description}}</td>
         <td>{{project.label}}</td>
-        <td>{{project.owner}}</td>
+        <td>{{project.owner.username}}</td>
         <td>{{project.creationDate}}<td>
 
         <td>

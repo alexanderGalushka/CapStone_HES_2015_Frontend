@@ -20,10 +20,12 @@
       'mgcrea.ngStrap',
       'ngSlider',
       // application modules
-      'project',
       'adamServices',
       'navbarAdam',
-      'project.data.model'
+      'project',
+      'project.data.model',
+      'plate',
+      'plate.data.model'
     ])
 
     .config(configAdam);
@@ -33,30 +35,34 @@
     //$resourceProvider.defaults.useXDomain = true;  not supported?
 
     $routeProvider.
-          when('/projects', {
-            templateUrl: 'project/project.html',
-            controller: 'ProjectsCtrl',
-            controllerAs: 'projVm'
-          }).
-          when('/plates', {
-            templateUrl: 'plate/plate.html',
-            controller: 'PlatesCtrl'
-          }).
-          when('/plateeditor', {
-            templateUrl: 'plateeditor/plateeditor.html',
-            controller: 'PlateeditorCtrl'
-          }).
-          when('/plateresults', {
-            templateUrl: 'plateresult/plateresult.html',
-            controller: 'PlateResultsCtrl'
-          }).
-          when('/qc', {
-            templateUrl: 'qc/qc.html',
-            controller: 'QcCtrl'
-          }).
-          otherwise({
-            redirectTo: '/projects'
-          });
+      when('/projects', {
+        templateUrl: 'project/project.html',
+        controller: 'ProjectsCtrl',
+        controllerAs: 'projVm'
+      }).
+      when('/plates', {
+        templateUrl: 'plate/plate.html',
+        controller: 'PlateCtrl',
+        controllerAs: 'plateVm'
+      }).
+      when('/plateeditor', {
+        templateUrl: 'plateeditor/plateeditor.html',
+        controller: 'PlateeditorCtrl',
+        controllerAs: 'pleditVm'
+      }).
+      when('/plateresults', {
+        templateUrl: 'plateresult/plateresult.html',
+        controller: 'PlateResultsCtrl',
+        controllerAs: 'plresVm'
+      }).
+      when('/qc', {
+        templateUrl: 'qc/qc.html',
+        controller: 'QcCtrl',
+        controllerAs: 'qcVm'
+      }).
+      otherwise({
+        redirectTo: '/projects'
+      });
   }
 
 })();
