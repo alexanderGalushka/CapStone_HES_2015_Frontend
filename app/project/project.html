@@ -35,16 +35,16 @@
       </thead>
 
       <tbody>
-      <tr ng-repeat="project in projVm.projectsDisplay" st-select-row="project" ng-click="projVm.setActiveProject(project.name)">
+      <tr ng-repeat="project in projVm.projectsDisplay" st-select-row="project" ng-click="projVm.setActiveProject(project)">
 
         <td>{{project.name}}</td>
         <td>{{project.description}}</td>
         <td>{{project.label}}</td>
-        <td>{{project.owner.username}}</td>
+        <td>{{project.owner}}</td>
         <td>{{project.creationDate}}<td>
 
         <td>
-          <a class="btn btn-sm" href="#/plates" ng-click="projVm.setActiveProject(project.name)">
+          <a class="btn btn-sm" href="#/plate" ng-click="projVm.setActiveProject(project)">
             <i class="glyphicon glyphicon-th">
             </i>
           </a>

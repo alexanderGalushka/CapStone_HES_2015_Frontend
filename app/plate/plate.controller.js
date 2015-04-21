@@ -13,12 +13,14 @@
     $scope.ActivePlate = activePlate;
     $scope.activePlateResult = activePlateResult;
 
+    plateVm.aside = true;
     plateVm.setActivePlate = setActivePlate;
     plateVm.addNewPlate = addNewPlate;
     plateVm.editPlate = editPlate;
     plateVm.saveChangesPlate = saveChangesPlate;
     plateVm.addLabel = addLabel;
     plateVm.deletePlate = deletePlate;
+    plateVm.clearActiveProject = clearActiveProject;
 
 
     plateVm.plates = Plate.query();
@@ -39,10 +41,11 @@
         "numberOfRows":"",
         "numberOfColumns":"",
         "barcode":"",
-        //"protocolid":"",
+        "protocolid":"",
         //"date": $filter('date')(new Date(),'MM/dd/yyyy'),
         "wellLabels":[{name:"good"}, {name:"start"}]
       };
+      plateVm.newplate.projectId = project.id;
     }
 
     function editPlate(plate) {
@@ -79,5 +82,10 @@
       plateVm.plates.splice(index, 1);
     }
 
+    function clearActiveProject(){
+      $scope.ActiveProject.project  = "";
+      $scope.ActivePlate.plate = "";
+      $scope.activePlateResult.plate  = "";
+    }
   }
 })();

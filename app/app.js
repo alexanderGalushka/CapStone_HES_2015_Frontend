@@ -23,6 +23,7 @@
       'adamServices',
       'navbarAdam',
       'project',
+      'projectpanel',
       'project.data.model',
       'plate',
       'plate.data.model'

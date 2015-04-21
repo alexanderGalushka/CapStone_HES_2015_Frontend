@@ -6,8 +6,8 @@
     .controller('ProjectsCtrl', ProjectsCtrl);
 
 
-  ProjectsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "Project","$http", "$filter"];
-  function ProjectsCtrl($scope, activeProject, activePlate, activePlateResult, Project,$http, $filter) {
+  ProjectsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "Project", "$filter"];
+  function ProjectsCtrl($scope, activeProject, activePlate, activePlateResult, Project, $filter) {
     var projVm = this;
 
     $scope.ActiveProject = activeProject;
@@ -76,7 +76,7 @@
 
 
     function setActiveProject (proj){
-      $scope.ActiveProject.project = proj;
+      $scope.ActiveProject.project= proj;
       $scope.ActivePlate.plate  = "";
       $scope.activePlateResult.plate  = "";
     };
