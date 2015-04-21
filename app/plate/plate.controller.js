@@ -41,7 +41,7 @@
         "barcode":"",
         //"protocolid":"",
         //"date": $filter('date')(new Date(),'MM/dd/yyyy'),
-        "wellLabels":[]
+        "wellLabels":[{name:"good"}, {name:"start"}]
       };
     }
 

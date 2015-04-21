@@ -17,12 +17,13 @@
         <tr>
 
             <th>
-                {{plateVm.ActiveProject.project}}
+                {{ActiveProject.project}}
             </th>
-            <th ng-show="!plateVm.ActiveProject.project">
+            <th ng-disabled="plateVm.ActiveProject.project">
                 <button type="button" class="btn btn-sm btn-success" data-template="plate/aside.edit.plate.html"
                         data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body"
-                        content= "x" title="Add plate in {{plateVm.ActiveProject.project}}" ng-click="plateVm.addNewPlate(ActiveProject.project)">
+                        content= "x" title="Add plate in {{plateVm.ActiveProject.project}}" ng-click="plateVm.addNewPlate(ActiveProject.project)"
+                        ng-disabled="!ActiveProject.project==''">
                     <i class="glyphicon glyphicon-plus">
                     </i> Add plate
                 </button>
@@ -32,19 +33,8 @@
             <th></th>
             <th></th>
             <th></th>
-            <th ng-show="plateVm.ActiveProject.project">
-                <button type="button" class="btn btn-sm" ng-click="plateVm.clearActiveProject()">
-                    <i >Show all projects</i>
-                </button>
-            </th>
-            <th ng-show="plateVm.ActiveProject.project">
-                <button type="button" class="btn btn-sm btn-success" disabled>
-                    <i class="glyphicon glyphicon-plus">
-                    </i> Add plate
-                </button>
-            </th>
-            <th ng-show="plateVm.ActiveProject.project">
-                <button type="button" class="btn btn-sm" ng-click="clearActiveProject()" disabled>
+            <th >
+                <button type="button" class="btn btn-sm" ng-click="plateVm.clearActiveProject()" ng-disabled="ActiveProject.project==''">
                     <i >Show all projects</i>
                 </button>
             </th>
