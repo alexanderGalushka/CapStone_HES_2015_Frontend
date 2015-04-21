@@ -1,5 +1,5 @@
 <div class="panel-group col-md-4" ng-model="panels.activePanel" data-allow-multiple="true" bs-collapse ng-if="!plateVm.aside">
-  <projectpanel asideind="plateVm.aside"></projectpanel>
+  <admahes-projectpanel asideind="plateVm.aside"></admahes-projectpanel>
 </div>
 
 <div class="col-md-8" >
@@ -53,7 +53,7 @@
     </thead>
 
     <tbody>
-    <tr st-select-row="plate" ng-repeat="plate in plateVm.platesDisplay | filter:{"projectId":ActiveProject.id}" ng-click="plateVm.setActivePlate(plate.name)">
+    <tr st-select-row="plate" ng-repeat="plate in plateVm.platesDisplay | filter:{projectId:ActiveProject.project.id}" ng-click="plateVm.setActivePlate(plate.name)">
       <td>{{plate.name}}</td>
       <td>{{plate.label}}</td>
       <td>{{plate.numberOfRows}}x{{plate.numberOfColumns}}</td>

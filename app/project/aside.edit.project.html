@@ -28,7 +28,8 @@
           </thead>
           <tbody>
           <tr ng-repeat="collaborator in projVm.newproject.collaborators" st-select-row="collaborator">
-            <td>{{collaborator.name}}</td>
+            <td>{{collaborator.username}}</td>
+            <td>{{collaborator.firstName}} {{collaborator.lastName}}</td>
             <td>
               <button type="button" class="btn btn-sm btn-danger" ng-click="projVm.newproject.collaborators.splice($index, 1);">
                 <i class="glyphicon glyphicon-remove-circle">
@@ -80,7 +81,7 @@
           </thead>
           <tbody>
           <tr ng-repeat="tag in projVm.newproject.tags" st-select-row="tag">
-            <td>{{tag}}</td>
+            <td>{{tag.description}}</td>
             <td>
               <button type="button" class="btn btn-sm btn-danger" ng-click="projVm.newproject.tags.splice($index, 1);">
                 <i class="glyphicon glyphicon-remove-circle">

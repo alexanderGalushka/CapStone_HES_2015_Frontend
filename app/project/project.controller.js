@@ -44,8 +44,8 @@
         "label": "",
         //"owner":"Ivan",
         //"creationDate": "" //,
-        //"tags":[],
-        //"collaborators":[]
+        "tags":[],
+        "collaborators":[]
       };
       //projVm.newproject.creationDate = $filter('date')(new Date(),'MM/dd/yyyy');
     };
@@ -69,8 +69,8 @@
         proj.label = projVm.newproject.label;
         //proj.owner = projVm.newproject.owner;
         //proj.creationDate = projVm.newproject.creationDate  ;
-        //proj.tags = projVm.newproject.tags;
-        //proj.collaborators = projVm.newproject.collaborators;
+        proj.tags = projVm.newproject.tags;
+        proj.collaborators = projVm.newproject.collaborators;
       }
     };
 
@@ -82,7 +82,7 @@
     };
 
     function addTag(tags,newTag){
-      tags.push({name:newTag});
+      tags.push({description:newTag});
     };
 
     function checkedOwner(check){

@@ -41,7 +41,7 @@
         "numberOfRows":"",
         "numberOfColumns":"",
         "barcode":"",
-        "protocolid":"",
+        "protocolId":"",
         //"date": $filter('date')(new Date(),'MM/dd/yyyy'),
         "wellLabels":[{name:"good"}, {name:"start"}]
       };
@@ -66,7 +66,7 @@
         plate.numberOfRows = plateVm.newplate.numberOfRows;
         plate.numberOfColumns = plateVm.newplate.numberOfColumns;
         plate.barcode = plateVm.newplate.barcode;
-        plate.protocolid = plateVm.newplate.protocolid;
+        plate.protocolId = plateVm.newplate.protocolId;
         plate.wellLabels = plateVm.newplate.wellLabels;
 
       }

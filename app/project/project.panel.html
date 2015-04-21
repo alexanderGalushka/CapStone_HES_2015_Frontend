@@ -28,6 +28,8 @@
       <tr st-select-row="project" ng-repeat="project in projpanVm.projectsDisplay" ng-click="projpanVm.setActiveProject(project)">
         <td>{{project.name}}</td>
         <td>{{project.label}}</td>
+        <td>{{project.owner}}</td>
+        <td>{{project.creationDate}}</td>
 
       </tr>
       </tbody>

@@ -3,7 +3,7 @@
 (function() {
   angular.module('projectpanel', ['ngAnimate','ngSanitize', 'smart-table','mgcrea.ngStrap'])
 
-    .directive('projectpanel', function() {
+    .directive('admahesProjectpanel', function() {
       return {
         restrict: 'E',
         scope: {
