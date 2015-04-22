@@ -26,7 +26,8 @@
       'projectpanel',
       'project.data.model',
       'plate',
-      'plate.data.model'
+      'plate.data.model',
+      'collaborator.data.model'
     ])
 
     .config(configAdam);

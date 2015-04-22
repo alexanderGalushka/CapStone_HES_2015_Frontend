@@ -6,8 +6,8 @@
     .controller('ProjectsCtrl', ProjectsCtrl);
 
 
-  ProjectsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "Project", "$filter"];
-  function ProjectsCtrl($scope, activeProject, activePlate, activePlateResult, Project, $filter) {
+  ProjectsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "Project", "Collaborator", "$filter"];
+  function ProjectsCtrl($scope, activeProject, activePlate, activePlateResult, Project, Collaborator, $filter) {
     var projVm = this;
 
     $scope.ActiveProject = activeProject;
@@ -27,6 +27,8 @@
 
     projVm.projects = Project.query();
     projVm.projectsDisplay = [].concat(projVm.projects);
+
+    projVm.collaborators = Collaborator.query({id:'others'});
 
     function deletePr(coll,indexinp){
       //deleteProject(coll,indexinp);
