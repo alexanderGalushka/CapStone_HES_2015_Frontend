@@ -27,7 +27,14 @@
       'project.data.model',
       'plate',
       'plate.data.model',
-      'collaborator.data.model'
+      'platepanel',
+      'collaborator.data.model',
+      'plateeditor',
+      'resetsel',
+      'plotlabels',
+      'singlewell',
+      'wellstable',
+      'wellattrfilter'
     ])
 
     .config(configAdam);
