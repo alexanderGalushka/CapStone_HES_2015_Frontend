@@ -36,13 +36,13 @@
       plateVm.plateAction = "new";
       plateVm.newplate = {
         "name": "",
-        "label": "L",
+        "label": "",
         "numberOfRows":"",
         "numberOfColumns":"",
         "barcode":"",
         "protocolId":"",
         //"date": $filter('date')(new Date(),'MM/dd/yyyy'),
-        "wellLabels":[{name:"good"}, {name:"start"}]
+        "wellLabels":[]
       };
       plateVm.newplate.projectId = project.id;
     }
