@@ -35,7 +35,6 @@
     function addNewPlate(project){
       plateVm.plateAction = "new";
       plateVm.newplate = {
-        "project":"",
         "name": "",
         "label": "L",
         "numberOfRows":"",
