@@ -12,7 +12,7 @@
                     labelsdisplayw:"=",
                     dropwellgroup:"="
                 },
-                templateUrl: 'wells.table.html',
+                templateUrl: 'plateeditor/wellstable/wells.table.html',
                 controller:WellsTableCtrl,
                 controllerAs: 'wellstabVm'
             };

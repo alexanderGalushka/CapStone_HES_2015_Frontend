@@ -13,7 +13,7 @@
                     rows:"=",
                     filterplateeditor:"="
                 },
-                templateUrl: 'plotlabels.html',
+                templateUrl: 'plateeditor/plotlabels/plotlabels.html',
                 controller:PlotLabelsCtrl,
                 controllerAs: 'plotlbVm'
             };

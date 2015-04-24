@@ -15,7 +15,7 @@
                     "labels":"=",
                     "rows":"="
                 },
-                templateUrl: 'singlewell.html',
+                templateUrl: 'plateeditor/singlewell/singlewell.html',
                 controller: SingleWellCtrl,
                 controllerAs: 'singlewellVm'
 
