@@ -4,19 +4,19 @@
 
   angular.module('wellattrfilter', [])
 
-  .filter("filterBorder3",  function() {
-    return function(well, cond) {
-      var wellSelected = false;
+    .filter("filterBorder3",  function() {
+      return function(well, cond) {
+        var wellSelected = false;
 
 
-       if(well.condSelected){
-        return "border:2px dashed red;";
-      }else{
-        return "border:2px solid black;";
+        if(well.condSelected){
+          return "border:2px dashed red;";
+        }else{
+          return "border:2px solid black;";
+        }
+
       }
-
-    }
-  })
+    })
 
     .filter("filterColor",  function() {
       return function(well, cond) {
