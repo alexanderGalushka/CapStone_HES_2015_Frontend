@@ -31,6 +31,7 @@
     pleditVm.selectedLabelColor = {"color":"#FFFFFF"};
     pleditVm.itemsByPage=10;
     pleditVm.aside = false;
+    pleditVm.multiselectWell = {"firstwell_row":"","firstwell_column":"","secondwell_row":"","secondwell_column":"","mode":false};
 
     $scope.ActiveProject = activeProject.project;
     $scope.ActivePlate = activePlate.plate;
