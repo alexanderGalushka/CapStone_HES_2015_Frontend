@@ -8,9 +8,9 @@
     .controller('PlateeditorCtrl',PlateeditorCtrl)
 
 
-  PlateeditorCtrl.$inject = ["$scope", "activeProject", "resetSelection", "filterColorFilter", "filterBorder3Filter",  "filterHoverFilter", "filterControlFilter", "rangeFilter"];
+  PlateeditorCtrl.$inject = ["$scope", "activeProject", "activePlate", "resetSelection", "filterColorFilter", "filterBorder3Filter",  "filterHoverFilter", "filterControlFilter", "rangeFilter"];
 
-  function PlateeditorCtrl($scope, activeProject, resetSelection, filterColor, filterBorder3, filterHover, filterControl, range) {
+  function PlateeditorCtrl($scope, activeProject, activePlate, resetSelection, filterColor, filterBorder3, filterHover, filterControl, range) {
     var pleditVm = this;
 
 
