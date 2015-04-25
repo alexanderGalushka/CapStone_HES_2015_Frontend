@@ -28,19 +28,19 @@
             var colorForWell = cond.labelValueColors[wellLabelValue];
             if (colorForWell != null) {
               well.color = colorForWell;
-              if(well.controltype === ".")
+              if(well.controlType === ".")
                 textColor = colorForWell;
               else
                 textColor = "black";
               return "color:" + textColor + ";background-color:" + colorForWell;
             }
             else
-            if(well.controltype === ".")
+            if(well.controlType === ".")
               return "color:#FF0000;background-color:#FF0000";
             else
               return "color:black;background-color:#FF0000";
           } else
-          if(well.controltype === ".")
+          if(well.controlType === ".")
             return "color:#FFFFFF;background-color:#FFFFFF";
           else
             return "color:black;background-color:#FFFFFF";
@@ -62,7 +62,7 @@
             else
               returnVal += ' '  + 'n/a';
           }
-          returnVal += ' ' + well["controltype"];
+          returnVal += ' ' + well["controlType"];
         }
 
         return returnVal
@@ -77,7 +77,7 @@
         var returnVal = '';
 
 
-        returnVal = well.controltype.substr(0,1);
+        returnVal = well.controlType.substr(0,1);
 
         return returnVal
       }

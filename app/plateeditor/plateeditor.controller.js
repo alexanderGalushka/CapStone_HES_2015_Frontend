@@ -42,7 +42,6 @@
 
 
     //pleditVm.rows = [];
-    console.log(JSON.stringify(activePlate.plate, null, 4));
     if(activePlate.plate != null) {
       pleditVm.rows= activePlate.plate.wells;
       pleditVm.rowsDisplay = [].concat(pleditVm.rows);
@@ -53,7 +52,6 @@
       pleditVm.labels = activePlate.plate.wellLabels;
       pleditVm.labelsDisplay = [].concat(pleditVm.labels);
       pleditVm.filterPlateEditor.labels = pleditVm.labels;
-      console.log(JSON.stringify("V2", null, 4));
       console.log(JSON.stringify(pleditVm, null, 4));
     }
 
