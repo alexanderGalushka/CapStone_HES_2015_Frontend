@@ -43,13 +43,13 @@
 
     //pleditVm.rows = [];
     if(activePlate.plate != null) {
-      pleditVm.rows= pleditVm.activePlate.plate.wells;
+      pleditVm.rows= activePlate.plate.wells;
       pleditVm.rowsDisplay = [].concat(pleditVm.rows);
 
-      pleditVm.numberOfRows = pleditVm.activePlate.plate.numberOfRows;
-      pleditVm.numberOfColumns = pleditVm.activePlate.plate.numberOfColumns;
+      pleditVm.numberOfRows = activePlate.plate.numberOfRows;
+      pleditVm.numberOfColumns = activePlate.plate.numberOfColumns;
 
-      pleditVm.labels = pleditVm.activePlate.plate.wellLabels;
+      pleditVm.labels = activePlate.plate.wellLabels;
       pleditVm.labelsDisplay = [].concat(pleditVm.labels);
       pleditVm.filterPlateEditor.labels = pleditVm.labels;
     }
