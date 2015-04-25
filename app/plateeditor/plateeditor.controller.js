@@ -42,7 +42,7 @@
 
 
 
-    //pleditVm.rows = [];
+    pleditVm.rows = [];
     if(activePlate.plate != null) {
       pleditVm.rows= activePlate.plate.wells;
       pleditVm.rowsDisplay = [].concat(pleditVm.rows);
@@ -53,7 +53,6 @@
       pleditVm.labels = activePlate.plate.wellLabels;
       pleditVm.labelsDisplay = [].concat(pleditVm.labels);
       pleditVm.filterPlateEditor.labels = pleditVm.labels;
-      console.log(JSON.stringify(pleditVm, null, 4));
     }
 
     function leftTable() {
@@ -82,7 +81,7 @@
     function mouseOverWell(well,rows){
       if(pleditVm.multiselectWell.mode) {
         if (pleditVm.multiselectWell.secondwell_row === "")
-          resetSelection(pleditVm.rowsOneDim, pleditVm.dropWellGroup);
+          resetSelection(pleditVm.rows, pleditVm.dropWellGroup);
         pleditVm.multiselectWell.secondwell_row = well.row;
         pleditVm.multiselectWell.secondwell_column = well.column;
 
