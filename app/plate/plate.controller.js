@@ -29,6 +29,7 @@
 
     function setActivePlate(plate){
       $scope.ActivePlate.plate = plate;
+      console.log(JSON.stringify(plate, null, 4));
       $scope.activePlateResult.plate  = "";
     }
 
