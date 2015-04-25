@@ -13,7 +13,7 @@
       <thead>
       <div class="form-group" ng-show="ActiveProject.project">
         <div class="input-group">
-          <div class="input-group-addon">{{ActiveProject.project}}</div>
+          <div class="input-group-addon">{{ActiveProject.project.name}}</div>
           <button type="button" class="btn btn-sm" ng-click="clearActiveProject()">
             <i >Show all projects</i>
           </button>
@@ -30,7 +30,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr st-select-row="plate" ng-repeat="plate in platepanVm.platesDisplay| filter:ActiveProject" ng-click="platepanVm.setActivePlate(plate.id)">
+      <tr st-select-row="plate" ng-repeat="plate in platepanVm.platesDisplay| filter:(projectId:ActiveProject.project.id}" ng-click="platepanVm.setActivePlate(plate.id)">
         <td>{{plate.name}}</td>
         <td>{{plate.label}}</td>
         <td>{{plate.owner}}</td>
