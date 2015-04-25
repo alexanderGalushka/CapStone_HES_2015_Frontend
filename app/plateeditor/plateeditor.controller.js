@@ -8,9 +8,9 @@
     .controller('PlateeditorCtrl',PlateeditorCtrl)
 
 
-  PlateeditorCtrl.$inject = ["$scope", "activeProject", "resetSelection", "filterColorFilter", "filterBorder3Filter",  "filterHoverFilter", "filterControlFilter"];
+  PlateeditorCtrl.$inject = ["$scope", "activeProject", "resetSelection", "filterColorFilter", "filterBorder3Filter",  "filterHoverFilter", "filterControlFilter", "rangeFilter"];
 
-  function PlateeditorCtrl($scope, activeProject, resetSelection, filterColor, filterBorder3, filterHover, filterControl) {
+  function PlateeditorCtrl($scope, activeProject, resetSelection, filterColor, filterBorder3, filterHover, filterControl, range) {
     var pleditVm = this;
 
 
@@ -32,7 +32,8 @@
     pleditVm.itemsByPage=10;
     pleditVm.aside = false;
 
-    $scope.ActiveProject = activeProject.activeId;
+    $scope.ActiveProject = activeProject.project;
+    $scope.ActivePlate = activePlate.plate;
     pleditVm.filterPlateEditor.plotLabelName = "";
     pleditVm.filterPlateEditor.labelValueColors = {};
     pleditVm.filterPlateEditor.wellgroup = [];
@@ -40,14 +41,18 @@
 
 
 
-    pleditVm.rows = [];
-    pleditVm.rowsDisplay = [].concat(pleditVm.rows);
+    //pleditVm.rows = [];
+    if(activePlate.plate != null) {
+      pleditVm.rows= pleditVm.activePlate.plate.wells;
+      pleditVm.rowsDisplay = [].concat(pleditVm.rows);
 
+      pleditVm.numberOfRows = pleditVm.activePlate.plate.numberOfRows;
+      pleditVm.numberOfColumns = pleditVm.activePlate.plate.numberOfColumns;
 
-    pleditVm.labels = [];
-    pleditVm.labelsDisplay = [].concat(pleditVm.labels);
-    pleditVm.filterPlateEditor.labels = pleditVm.labels;
-
+      pleditVm.labels = pleditVm.activePlate.plate.wellLabels;
+      pleditVm.labelsDisplay = [].concat(pleditVm.labels);
+      pleditVm.filterPlateEditor.labels = pleditVm.labels;
+    }
 
     function leftTable() {
       if(pleditVm.multiselectWell.mode) {

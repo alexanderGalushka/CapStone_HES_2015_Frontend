@@ -30,7 +30,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr st-select-row="plate" ng-repeat="plate in platepanVm.platesDisplay| filter:{projectId:ActiveProject.project.id}" ng-click="platepanVm.setActivePlate(plate.id)">
+      <tr st-select-row="plate" ng-repeat="plate in platepanVm.platesDisplay| filter:{projectId:ActiveProject.project.id}" ng-click="platepanVm.setActivePlate(plate)">
         <td>{{plate.name}}</td>
         <td>{{plate.label}}</td>
         <td>{{plate.owner}}</td>
