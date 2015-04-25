@@ -22,8 +22,8 @@
             };
         });
 
-    //SingleWellCtrl.$inject = [''];
-    function SingleWellCtrl() {
+    SingleWellCtrl.$inject = ["filterColorFilter", "filterBorder3Filter",  "filterHoverFilter", "filterControlFilter"];
+    function SingleWellCtrl(filterColor, filterBorder3, filterHover, filterControl) {
         var singlewellVm = this;
 
         singlewellVm.updateWell = updateWell;
@@ -43,16 +43,6 @@
                     }
                 }
             }
-
-
-        function mouseDownWell(well,labels) {
-            //$scope.resetSelection();
-            $scope.multiselectWell.mode = true;
-            $scope.multiselectWell.firstwell_row = well.row;
-            $scope.multiselectWell.firstwell_column = well.column;
-            //console.log(JSON.stringify( $scope.multiselectWell, null, 4));
-        }
-
 
 
     }
