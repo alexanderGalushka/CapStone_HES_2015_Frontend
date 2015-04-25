@@ -15,19 +15,21 @@
 </div>
 
 
-<div class="panel-group col-lg-8" ><label style="white-space: nowrap;border:solid 4px black" ng-mouseleave="leftTable()">
+<div class="panel-group col-lg-8" ><label style="white-space: nowrap;border:solid 4px black" ng-mouseleave="pleditVm.leftTable()">
     <div ng-attr-style="white-space: nowrap;height:{{pleditVm.boxsz}}px" ng-repeat="i in []|range:0:pleditVm.numberOfRows-1" ><!--
 --><label ng-repeat="j in []|range:0:pleditVm.numberOfColumns-1" style="white-space: nowrap;padding:0px;margin:0px;border:0px width:0px;height:0px" class="noselect"><!--
     --><adamhes-singlewell well="pleditVm.rows[(i * pleditVm.numberOfColumns)+ j]" boxsize="{{pleditVm.boxsz}}"  tooltipdelay="{{pleditVm.tooltipdel}}"
-                           filterarg="pleditVm.filterPlateEditor" dropgroup="pleditVm.dropWellGroup" labels="labelsDisplay" rows="pleditVm.rows"
-                    style="white-space: nowrap;padding:0px;margin:0px;border:0px width:0px;height:0px" ng-mousedown="mouseDownWell(pleditVm.rows[(i * pleditVm.numberOfColumns)+ j], labels)"
-                    ng-mouseover="mouseOverWell(pleditVm.rows[(i * pleditVm.numberOfColumns)+ j], pleditVm.rows)"  ng-mouseup="mouseUpWell(pleditVm.rows[(i * pleditVm.numberOfColumns)+ j], labels)"><adamhes-singlewell><!--
+                           filterarg="pleditVm.filterPlateEditor" dropgroup="pleditVm.dropWellGroup" labels="pleditVm.labelsDisplay" rows="pleditVm.rows"
+                    style="white-space: nowrap;padding:0px;margin:0px;border:0px width:0px;height:0px"
+                           ng-mousedown="pleditVm.mouseDownWell(pleditVm.rows[(i * pleditVm.numberOfColumns)+ j], labels)"
+                    ng-mouseover="pleditVm.mouseOverWell(pleditVm.rows[(i * pleditVm.numberOfColumns)+ j], pleditVm.rows)"
+                           ng-mouseup="pleditVm.mouseUpWell(pleditVm.rows[(i * pleditVm.numberOfColumns)+ j], labels)"><adamhes-singlewell><!--
 --></label><!--
 --></div>
 </label>
 </div>
 
 <div class="panel-group col-lg-12">
-    <adamhes-wellstable rowsonedimw="pleditVm.rows" rowsonedimdisplayw="rowsDisplay" labelsdisplayw="labelsDisplay"
+    <adamhes-wellstable rowsonedimw="pleditVm.rows" rowsonedimdisplayw="pleditVm.rowsDisplay" labelsdisplayw="pleditVm.labelsDisplay"
                         dropwellgroup="pleditVm.dropWellGroup"></adamhes-wellstable>
 </div>
