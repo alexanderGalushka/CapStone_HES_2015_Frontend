@@ -79,7 +79,7 @@
     }
 
     function addControlType(controlTypes,newcontrolType,newdisplayChar){
-      controlTypes.push({name:newLabel, displayChar:newdisplayChar});
+      controlTypes.push({name:newcontrolType, displayChar:newdisplayChar});
     }
 
     function deletePlate(plate){

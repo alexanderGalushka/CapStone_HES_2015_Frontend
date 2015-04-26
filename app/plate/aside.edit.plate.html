@@ -54,15 +54,20 @@
 
         <table  st-table="plateVm.newplate.controlTypes" class="table table-striped">
           <thead>
-          <th st-sort="">Label</th>
-
+          <th st-sort="">Control types</th>
           <tr>
+          <th>Type</th>
+          <th>Dispaly char</th>
+          </tr>
+          <tr>
+            <th><input type="text" ng-model="newcontrolType"></th>
             <th>
-              <input type="text" ng-model="newcontrolType">
               <input type="text" ng-model="newdisplayChar">
+            </th>
+            <th>
               <button type="button" ng-click="plateVm.addControlType(plateVm.newplate.controlTypes,newcontrolType,newdisplayChar)" class="btn btn-sm btn-success">
                 <i class="glyphicon glyphicon-plus">
-                </i> Add label
+                </i> Add control type
               </button>
             </th>
           </tr>
