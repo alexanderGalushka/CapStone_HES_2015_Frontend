@@ -51,7 +51,6 @@
 
       if(wells != null && labelName != null) {
         var uniq = uniqueMemebers(wells, labelName);
-        console.log(JSON.stringify( uniq, null, 4));
 
         if(uniq.length != 0 && uniq  != null) {
           hlsColorHueIncr = 300 / (uniq.length);

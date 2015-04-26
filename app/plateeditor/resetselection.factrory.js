@@ -5,11 +5,11 @@
     angular.module('resetsel', [])
 
         .factory('resetSelection', function() {
-            return function (rowsOneDim, dropwellstatus){
+            return function (wells, dropwellstatus){
                 //$scope.filterPlateEditor.wellgroup = [];
-                for (var i = 0; i < rowsOneDim.length; i++) {
-                    rowsOneDim[i].isSelected = false;
-                    rowsOneDim[i].condSelected = false;
+                for (var i = 0; i < wells.length; i++) {
+                    wells[i].isSelected = false;
+                    wells[i].condSelected = false;
                 }
                 dropwellstatus.checked = "true";
             }

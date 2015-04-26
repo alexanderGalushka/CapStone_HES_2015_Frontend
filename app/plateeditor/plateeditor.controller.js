@@ -69,7 +69,8 @@
     function mouseDownWell(well,labels) {
       pleditVm.multiselectWell.mode = true;
       pleditVm.multiselectWell.firstwell_row = well.row;
-      pleditVm.multiselectWell.firstwell_column = well.column;
+      pleditVm.multiselectWell.firstwell_column = well.col;
+
     }
 
     function mouseUpWell(well,labels) {
@@ -82,11 +83,13 @@
     }
 
     function mouseOverWell(well,rows){
+
       if(pleditVm.multiselectWell.mode) {
         if (pleditVm.multiselectWell.secondwell_row === "")
           resetSelection(pleditVm.rows, pleditVm.dropWellGroup);
         pleditVm.multiselectWell.secondwell_row = well.row;
-        pleditVm.multiselectWell.secondwell_column = well.column;
+        pleditVm.multiselectWell.secondwell_column = well.col;
+        console.log(JSON.stringify( pleditVm.multiselectWell, null, 4));
 
         var bigrow, smallrow, bigcolumn, smallcolumn;
         //var wellSelected;
@@ -109,13 +112,13 @@
         for (var i = 0; i < rows.length; i++) {
           rows[i].condSelected = false;
           if (((rows[i].row >=  smallrow )&&(rows[i].row <=  bigrow )) &&
-            ((rows[i].column >=  smallcolumn)&&(rows[i].column <=  bigcolumn)))
+            ((rows[i].col >=  smallcolumn)&&(rows[i].col <=  bigcolumn)))
           {
             rows[i].condSelected = true;
           }
 
         }
-
+        console.log(JSON.stringify( rows, null, 4));
       }
     }
 
