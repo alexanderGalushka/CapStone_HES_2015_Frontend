@@ -19,6 +19,7 @@
     plateVm.editPlate = editPlate;
     plateVm.saveChangesPlate = saveChangesPlate;
     plateVm.addLabel = addLabel;
+    plateVm.addControlType = addControlType;
     plateVm.deletePlate = deletePlate;
     plateVm.clearActiveProject = clearActiveProject;
 
@@ -28,7 +29,8 @@
 
 
     function setActivePlate(plate){
-      $scope.ActivePlate.plate = plate;
+      activePlate.plate  = plate;
+      activePlate.plate.wellsDisplay = [].concat(activePlate.plate.wells);
       $scope.activePlateResult.plate  = "";
     }
 
@@ -42,14 +44,15 @@
         "barcode":"",
         "protocolId":"",
         //"date": $filter('date')(new Date(),'MM/dd/yyyy'),
-        "wellLabels":[]
+        "wellLabels":[],
+        controlTypes:[{name:"positive", displayChar:"p"},{name:"negative", displayChar:"n"}]
       };
       plateVm.newplate.projectId = project.id;
     }
 
     function editPlate(plate) {
       plateVm.plateAction = "edit";
-      plateVm.newplate = JSON.parse(JSON.stringify(plate));;
+      plateVm.newplate = JSON.parse(JSON.stringify(plate));
     }
 
     function saveChangesPlate(act,plate) {
@@ -73,6 +76,10 @@
 
     function addLabel(labels,newLabel){
       labels.push({name:newLabel});
+    }
+
+    function addControlType(controlTypes,newcontrolType,newdisplayChar){
+      controlTypes.push({name:newLabel, displayChar:newdisplayChar});
     }
 
     function deletePlate(plate){

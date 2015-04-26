@@ -34,14 +34,14 @@
     pleditVm.multiselectWell = {"firstwell_row":"","firstwell_column":"","secondwell_row":"","secondwell_column":"","mode":false};
 
     $scope.ActiveProject = activeProject.project;
-    $scope.ActivePlate = activePlate.plate;
+    $scope.ActivePlate = activePlate;
     pleditVm.filterPlateEditor.plotLabelName = "";
     pleditVm.filterPlateEditor.labelValueColors = {};
     pleditVm.filterPlateEditor.wellgroup = [];
     pleditVm.filterPlateEditor.labels = {};
 
 
-
+/*
     pleditVm.rows = [];
     if(activePlate.plate != null) {
       for (var i = 0; i < activePlate.plate.wells.length; i++) {
@@ -57,7 +57,7 @@
       pleditVm.labelsDisplay = [].concat(pleditVm.labels);
       pleditVm.filterPlateEditor.labels = pleditVm.labels;
     }
-
+*/
     function leftTable() {
       if(pleditVm.multiselectWell.mode) {
         pleditVm.multiselectWell.secondwell_row = "";
@@ -82,13 +82,13 @@
 
     }
 
-    function mouseOverWell(well,rows){
+    function mouseOverWell(singleWell,wells){
 
       if(pleditVm.multiselectWell.mode) {
         if (pleditVm.multiselectWell.secondwell_row === "")
-          resetSelection(pleditVm.rows, pleditVm.dropWellGroup);
-        pleditVm.multiselectWell.secondwell_row = well.row;
-        pleditVm.multiselectWell.secondwell_column = well.col;
+          resetSelection(wells, pleditVm.dropWellGroup);
+        pleditVm.multiselectWell.secondwell_row = singleWell.row;
+        pleditVm.multiselectWell.secondwell_column = singleWell.col;
 
         var bigrow, smallrow, bigcolumn, smallcolumn;
         //var wellSelected;
@@ -108,12 +108,12 @@
           smallcolumn = pleditVm.multiselectWell.firstwell_column;
         }
 
-        for (var i = 0; i < rows.length; i++) {
-          rows[i].condSelected = false;
-          if (((rows[i].row >=  smallrow )&&(rows[i].row <=  bigrow )) &&
-            ((rows[i].col >=  smallcolumn)&&(rows[i].col <=  bigcolumn)))
+        for (var i = 0; i < wells.length; i++) {
+          wells[i].condSelected = false;
+          if (((wells[i].row >=  smallrow )&&(wells[i].row <=  bigrow )) &&
+            ((wells[i].col >=  smallcolumn)&&(wells[i].col <=  bigcolumn)))
           {
-            rows[i].condSelected = true;
+            wells[i].condSelected = true;
           }
 
         }

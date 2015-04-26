@@ -33,7 +33,8 @@
     platepanVm.platesDisplay = [].concat(platepanVm.plates);
 
     function setActivePlate (plate){
-      $scope.ActivePlate.plate  = plate;
+      activePlate.plate  = plate;
+      activePlate.plate.wellsDisplay = [].concat(activePlate.plate.wells);
       $scope.activePlateResult.plateresult  = "";
     }
 

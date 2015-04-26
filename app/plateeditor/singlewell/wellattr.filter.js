@@ -52,13 +52,13 @@
     })
 
     .filter("filterHover",  function() {
-      return function(well, cond) {
+      return function(well, labels) {
         var returnVal = '';
 
-        if(cond.labels != null && well != null) {
-          for (var i = 0; i < cond.labels.length; i++) {
-            if(well[cond.labels[i].name] != null)
-              returnVal += ' '  + well[cond.labels[i].name];
+        if(labels != null && well != null) {
+          for (var i = 0; i < labels.length; i++) {
+            if(well[labels[i].name] != null)
+              returnVal += ' '  + well[labels[i].name];
             else
               returnVal += ' '  + 'n/a';
           }
