@@ -20,7 +20,7 @@
 --><label ng-repeat="j in []|range:0:ActivePlate.plate.numberOfColumns-1" style="white-space: nowrap;padding:0px;margin:0px;border:0px width:0px;height:0px" class="noselect"><!--
     --><adamhes-singlewell well="ActivePlate.plate.wells[(i * ActivePlate.plate.numberOfColumns)+ j]" boxsize="{{pleditVm.boxsz}}"  tooltipdelay="{{pleditVm.tooltipdel}}"
                            filterarg="pleditVm.filterPlateEditor" dropgroup="pleditVm.dropWellGroup"
-                           labels="ActivePlate.plate.wellLabels" rows="ActivePlate.plate.wells" plate="ActivePlate.plate"
+                           labels="ActivePlate.plate.wellLabels" rows="ActivePlate.plate.wells" controltypes="ActivePlate.plate.controlTypes" plate="ActivePlate.plate"
                     style="white-space: nowrap;padding:0px;margin:0px;border:0px width:0px;height:0px"
                            ng-mousedown="pleditVm.mouseDownWell(ActivePlate.plate.wells[(i * ActivePlate.plate.numberOfColumns)+ j], ActivePlate.plate.wellLabels)"
                     ng-mouseover="pleditVm.mouseOverWell(ActivePlate.plate.wells[(i * ActivePlate.plate.numberOfColumns)+ j], ActivePlate.plate.wells)"

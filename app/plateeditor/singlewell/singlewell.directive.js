@@ -14,6 +14,7 @@
           dropgroup:"=",
           "labels":"=",
           "rows":"=",
+          "controltypes":"=",
           "plate":"="
         },
         templateUrl: 'plateeditor/singlewell/singlewell.html',
