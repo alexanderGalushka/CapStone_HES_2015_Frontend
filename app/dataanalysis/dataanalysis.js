@@ -3,7 +3,7 @@
   //TODO: remove displayed labels from menus?
   //TODO: separate x-axis labels from y-axis labels
 	
-  var app = angular.module('hesAdam');
+  var app = angular.module('adamApp');
 
   app.service('DAService', ['$rootScope',
     function($rootScope) {
