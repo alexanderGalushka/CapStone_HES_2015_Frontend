@@ -34,7 +34,8 @@
       'plotlabels',
       'singlewell',
       'wellstable',
-      'wellattrfilter'
+      'wellattrfilter',
+      'hesAdam'
     ])
 
     .config(configAdam);
@@ -69,6 +70,10 @@
         controller: 'QcCtrl',
         controllerAs: 'qcVm'
       }).
+      when('/dataanalysis', {
+                    templateUrl: 'dataanalysis/data_analysis.html',
+                    controller: 'DataAnalysisController'
+                }).
       otherwise({
         redirectTo: '/projects'
       });
