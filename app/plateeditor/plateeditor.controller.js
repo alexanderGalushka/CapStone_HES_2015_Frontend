@@ -89,7 +89,6 @@
           resetSelection(pleditVm.rows, pleditVm.dropWellGroup);
         pleditVm.multiselectWell.secondwell_row = well.row;
         pleditVm.multiselectWell.secondwell_column = well.col;
-        console.log(JSON.stringify( pleditVm.multiselectWell, null, 4));
 
         var bigrow, smallrow, bigcolumn, smallcolumn;
         //var wellSelected;
@@ -118,7 +117,6 @@
           }
 
         }
-        console.log(JSON.stringify( rows, null, 4));
       }
     }
 
