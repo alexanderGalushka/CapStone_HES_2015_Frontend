@@ -44,6 +44,9 @@
 
     pleditVm.rows = [];
     if(activePlate.plate != null) {
+      for (var i = 0; i < activePlate.plate.wells.length; i++) {
+        activePlate.plate.wells[i].color = "#FFFFFF";
+      }
       pleditVm.rows= activePlate.plate.wells;
       pleditVm.rowsDisplay = [].concat(pleditVm.rows);
 

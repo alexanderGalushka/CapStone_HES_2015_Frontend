@@ -23,20 +23,13 @@
 
         var wellstabVm = this;
 
-        wellstabVm.test1 = "test1";
-        wellstabVm.test2 = {name:"test2"};
-
         wellstabVm.resetSelection = resetSelection;
         wellstabVm.toogleRowSelection = toogleRowSelection;
         wellstabVm.updateWellUniqLabelValues = updateWellUniqLabelValues;
 
         function toogleRowSelection(well, labels, rowsOneD, dropwellgroup){
-            //$scope.filterPlateEditor.wellgroup = well;
-            //$scope.addWellToSelection(well, $scope.filterPlateEditor.wellgroup);
-            //$scope.filterPlateEditor.labels = labels;
             dropwellgroup.checked = "true";
 
-            //$scope.toogleRowSelection??(well, labels, rowsOneD);
             var wellSelected;
 
             for (var i = 0; i < rowsOneD.length; i++) {
@@ -61,13 +54,15 @@
         }
 
         function updateWellUniqLabelValues(well, newColor){
+          /*
             $scope.uniqueLabelValuesColors[well[$scope.filterPlateEditor.plotLabelName]] = newColor;
-            //console.log(JSON.stringify($scope.uniqueLabelValues, null, 4));
             for (var i = 0; i < $scope.uniqueLabelValues.length; i++) {
                 if($scope.uniqueLabelValues[i].name === well[$scope.filterPlateEditor.plotLabelName]){
                     $scope.uniqueLabelValues[i].color = newColor;
                 }
             }
+            */
+
         }
 
     }
