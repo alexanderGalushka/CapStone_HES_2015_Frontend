@@ -348,6 +348,7 @@ Dygraph.Export.drawLegend = function (canvas, dygraph, options) {
  * If the plugin is not found, it returns null.
  */
 Dygraph.Export.getPlugin = function(dygraph, name) {
+    var i = 0;
     for (i = 0; i < dygraph.plugins_.length; i++) {
         if (dygraph.plugins_[i].plugin.toString() == name) {
             return dygraph.plugins_[i];
