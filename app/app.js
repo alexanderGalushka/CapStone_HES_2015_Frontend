@@ -34,8 +34,7 @@
       'plotlabels',
       'singlewell',
       'wellstable',
-      'wellattrfilter',
-      'hesAdam'
+      'wellattrfilter'
     ])
 
     .config(configAdam);
