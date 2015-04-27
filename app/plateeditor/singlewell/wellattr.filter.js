@@ -28,19 +28,19 @@
             var colorForWell = cond.labelValueColors[wellLabelValue];
             if (colorForWell != null) {
               well.color = colorForWell;
-              if(well.controlType === ".")
+              if(well.controlType === "" || well.controlType === null)
                 textColor = colorForWell;
               else
                 textColor = "black";
               return "color:" + textColor + ";background-color:" + colorForWell;
             }
             else
-            if(well.controlType === ".")
+            if(well.controlType === "" || well.controlType === null)
               return "color:#FF0000;background-color:#FF0000";
             else
               return "color:black;background-color:#FF0000";
           } else
-          if(well.controlType === ".")
+          if(well.controlType === "" || well.controlType === null)
             return "color:#FFFFFF;background-color:#FFFFFF";
           else
             return "color:black;background-color:#FFFFFF";
@@ -73,13 +73,19 @@
     })
 
     .filter("filterControl",  function() {
-      return function(well, cond) {
-        var returnVal = '';
+      return function(well, controltypes) {
+        var returnVal = '.';
 
+        if(well.controlType === null || well.controlType === '' )
+          returnVal = '.';
+        else {
+          for(var i = 0; i < controltypes.length; i++) {
+            if(well.controlType === controltypes[i].name)
+              returnVal = controltypes[i].displayChar;
+          }
+        }
 
-        returnVal = well.controlType.substr(0,1);
-
-        return returnVal
+        return returnVal;
       }
     })
 

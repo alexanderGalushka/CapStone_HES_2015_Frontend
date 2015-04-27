@@ -2,7 +2,7 @@
 
   //TODO: remove displayed labels from menus?
   //TODO: separate x-axis labels from y-axis labels
-	
+
   var app = angular.module('adamApp');
 
   app.service('DAService', ['$rootScope',
@@ -28,15 +28,15 @@
 //        "nmbrPlates": 8,
 //        "selected": false
 //      }];
-	  
+
 	  var projects = []
 
       jQuery.ajax({
           url:    '/adam/rest/project/',
           success: function(data) {
-              
+
         	  for (var index in data){
-          		
+
           		var new_project = {
           			"title" : data[index].name,
           			"description" : data[index].description,
@@ -46,7 +46,7 @@
           			"selected" : false
           		}
           		projects.push(new_project);
-          	 } 
+          	 }
           },
           async: false
      });
@@ -138,7 +138,7 @@
         if (grid_labels.length == 0)
           return true;
 
-        // in this case we will disregard criteria, if nothing is 
+        // in this case we will disregard criteria, if nothing is
         // selected all grid_labels are ok
         // if at least one selected then only those grid_labels are ok
         var noLabelsSelected = true;
@@ -166,7 +166,7 @@
         if (compounds.length == 0)
           return true;
 
-        // in this case we will disregard criteria, if nothing is 
+        // in this case we will disregard criteria, if nothing is
         // selected all grid_labels are ok
         // if at least one selected then only those grid_labels are ok
         var noLabelsSelected = true;
@@ -194,7 +194,7 @@
         if (substrates.length == 0)
           return true;
 
-        // in this case we will disregard criteria, if nothing is 
+        // in this case we will disregard criteria, if nothing is
         // selected all grid_labels are ok
         // if at least one selected then only those grid_labels are ok
         var noLabelsSelected = true;
@@ -223,7 +223,7 @@
         if (measurementTypes.length == 0)
           return true;
 
-        // in this case we will disregard criteria, if nothing is 
+        // in this case we will disregard criteria, if nothing is
         // selected all grid_labels are ok
         // if at least one selected then only those grid_labels are ok
         var noLabelsSelected = true;
@@ -394,9 +394,9 @@
       };
       var getWells = function(projectTitle) {
         var project = searchForProject(projectTitle);
-        
+
         var reeturnArray = [];
-        
+
         jQuery.ajax({
             url:    '/adam/getWells/' + project.id,
             success: function(data) {
@@ -404,7 +404,7 @@
             },
             async: false
         });
-        
+
         for (var p = 0, pLen = reeturnArray.length; p < pLen; p++) {
           var element = reeturnArray[p];
           element.id = p;
@@ -458,7 +458,7 @@
       var generateSequence = function(start, end, increment) {
         var array = [];
         var i;
-        for (i = start; i <= end; i += increment) {
+        for (var i = start; i <= end; i += increment) {
           array.push(i);
         }
         return array;
@@ -484,7 +484,7 @@
       // RETURNS NULL IF LABEL DOES NOT EXIST (should never happen really)
       var getDataForLabel = function(json, label) {
         var i;
-        for (i = 0; i < json.length; i++) {
+        for (var i = 0; i < json.length; i++) {
           if (json[i].labelName == label) {
             return json[i].labelData;
           }
@@ -595,7 +595,7 @@
               tmp = dataIndices;
               dataIndices = [];
               dataIndices.push(tmp.length > 0 ? tmp[0] : 0);
-              for (i in arrIndices) {
+              for (var i in arrIndices) {
                 dataIndices.push(arrIndices[i]);
               }
               break;
@@ -607,7 +607,7 @@
               }
               break;
             case 'add':
-              for (i in arrIndices) {
+              for (var i in arrIndices) {
                 dataIndices.push(arrIndices[i]);
               }
               break;
@@ -630,7 +630,7 @@
       var setPlotData = function() {
         data = [];
         plotLabels = [];
-        for (i in dataIndices) {
+        for (var i in dataIndices) {
           data.push(dummyData[dataIndices[i]]);
           plotLabels.push(dummyLabels[dataIndices[i]]);
         }
@@ -643,7 +643,7 @@
         // update options
         options.labels = plotLabels;
         options.axes.x.labels = plotLabels.length > 0 ? plotLabels[0] : [];
-        options.axes.x.valueRange = data[0].length > 0 ? [min(data[0]), max(data[0])] : [];        
+        options.axes.x.valueRange = data[0].length > 0 ? [min(data[0]), max(data[0])] : [];
       } // end of setPlotData();
 
       // TEMPORARY, WILL BE REPLACED BY CALL TO BACKEND
@@ -656,26 +656,26 @@
           var sum_xy = 0;
           var sum_xx = 0;
           var sum_yy = 0;
-          
+
           for (var i = 0; i < y.length; i++) {
-            
+
             sum_x += x[i];
             sum_y += y[i];
             sum_xy += (x[i]*y[i]);
             sum_xx += (x[i]*x[i]);
             sum_yy += (y[i]*y[i]);
-          } 
-          
+          }
+
           lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
           lr['intercept'] = (sum_y - lr.slope * sum_x)/n;
           lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
-          
+
           return lr;
       }
 
       var curveFitLines = [];
       var curveFitEquations = [];
-      for(i in dummyLabels) {
+      for(var i in dummyLabels) {
         curveFitLines.push([]);
         curveFitEquations.push('');
       }
@@ -694,7 +694,7 @@
           equation = equation + ' - ' + Math.abs(lr.intercept);
         }
         curveFitEquations[index] = equation;
-        for(i in xData) {
+        for(var i in xData) {
           curveFitLines[index].push(lr.slope * xData[i] + lr.intercept);
         }
         plotCurveFit();
@@ -708,7 +708,7 @@
       }; // end of removeCurveFit()
 
       var plotCurveFit = function() {
-        for(i in curveFitLines) {
+        for(var i in curveFitLines) {
           if(i.length > 0) {
             data.push(curveFitLines[i]);
             plotLabels.push(curveFitEquations[i]);
@@ -847,7 +847,7 @@
 
       $scope.labels = DAService.labels.slice(1); // remove default x-axis label, don't want that in the dropdown menu
       $scope.showLabels = [];
-      for(i in $scope.labels) {
+      for(var i in $scope.labels) {
         $scope.showLabels.push(true);
       }
       $scope.graphTypes = ['scatter', 'line', 'curve fit'];
@@ -1000,7 +1000,7 @@
                 if(DAService.hasCurveFit(thisLabel)) {
                   DAService.removeCurveFit(thisLabel);
                 }
-                break;            
+                break;
               case 'curve fit':
                 if(!DAService.hasCurveFit(thisLabel)) {
                   DAService.options.series[thisLabel].strokeWidth = 0.0;
