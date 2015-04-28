@@ -93,14 +93,14 @@
         var bigrow, smallrow, bigcolumn, smallcolumn;
         //var wellSelected;
 
-        if(pleditVm.multiselectWell.firstwell_row >= pleditVm.multiselectWell.secondwell_row){
+        if(parseInt(pleditVm.multiselectWell.firstwell_row,10) >= parseInt(pleditVm.multiselectWell.secondwell_row,10)){
           bigrow = pleditVm.multiselectWell.firstwell_row;
           smallrow = pleditVm.multiselectWell.secondwell_row;
         }else{
           bigrow = pleditVm.multiselectWell.secondwell_row;
           smallrow = pleditVm.multiselectWell.firstwell_row;
         }
-        if(pleditVm.multiselectWell.firstwell_column >= pleditVm.multiselectWell.secondwell_column){
+        if(parseInt(pleditVm.multiselectWell.firstwell_column,10) >= parseInt(pleditVm.multiselectWell.secondwell_column,10)){
           bigcolumn = pleditVm.multiselectWell.firstwell_column;
           smallcolumn = pleditVm.multiselectWell.secondwell_column;
         }else{
@@ -110,8 +110,8 @@
 
         for (var i = 0; i < wells.length; i++) {
           wells[i].condSelected = false;
-          if (((wells[i].row >=  smallrow )&&(wells[i].row <=  bigrow )) &&
-            ((wells[i].col >=  smallcolumn)&&(wells[i].col <=  bigcolumn)))
+          if (((parseInt(wells[i].row,10) >=  parseInt(smallrow,10) )&&(parseInt(wells[i].row,10) <=  parseInt(bigrow,10) )) &&
+            ((parseInt(wells[i].col,10) >=  parseInt(smallcolumn,10))&&(parseInt(wells[i].col,10) <=  parseInt(bigcolumn,10))))
           {
             wells[i].condSelected = true;
           }

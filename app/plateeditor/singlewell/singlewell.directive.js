@@ -29,6 +29,7 @@
     var singlewellVm = this;
 
     singlewellVm.updateWell = updateWell;
+    singlewellVm.saveChangesWell = saveChangesWell;
 
 
     function updateWell(well, cond, rows, plate) {
@@ -48,7 +49,6 @@
     }
 
     function saveChangesWell(plate) {
-
       Plate.update({"id":plate.id},plate);
     }
 
