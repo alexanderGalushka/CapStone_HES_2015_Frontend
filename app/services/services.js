@@ -16,7 +16,7 @@ angular.module('adamServices', ['ngResource'])
 
   .service('activePlateResult', function() {
     var activePlateResult = this;
-    activePlateResult.name = "";
+    activePlateResult.plateResult = "";
   })
 
 ;

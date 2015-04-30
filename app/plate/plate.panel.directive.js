@@ -17,8 +17,8 @@
 
     .controller('PlatesPanelCtrl', PlatesPanelCtrl);
 
-  PlatesPanelCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "Plate"];
-  function PlatesPanelCtrl($scope, activeProject, activePlate, activePlateResult, Plate){
+  PlatesPanelCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "Plate", "Qc"];
+  function PlatesPanelCtrl($scope, activeProject, activePlate, activePlateResult, Plate, Qc){
 
     var platepanVm = this;
 
@@ -33,9 +33,16 @@
     platepanVm.platesDisplay = [].concat(platepanVm.plates);
 
     function setActivePlate (plate){
+      var plateres;
       activePlate.plate  = plate;
       activePlate.plate.wellsDisplay = [].concat(activePlate.plate.wells);
-      $scope.activePlateResult.plateresult  = "";
+
+      if(plate !== null) {
+        plateres = Qc.get({"id": plate.id},function(){
+          activePlateResult.plateResult = plateres;
+          console.log('Qc result', plateres);
+        });
+      }
     }
 
   }

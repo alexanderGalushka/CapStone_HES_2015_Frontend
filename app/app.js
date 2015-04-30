@@ -35,6 +35,9 @@
       'singlewell',
       'wellstable',
       'wellattrfilter',
+      'plateresults',
+      'measurmentsfilter',
+      "qc.data.model",
       'qc'
     ])
 
