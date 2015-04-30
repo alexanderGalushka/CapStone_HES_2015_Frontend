@@ -41,23 +41,6 @@
     pleditVm.filterPlateEditor.labels = {};
 
 
-/*
-    pleditVm.rows = [];
-    if(activePlate.plate != null) {
-      for (var i = 0; i < activePlate.plate.wells.length; i++) {
-        activePlate.plate.wells[i].color = "#FFFFFF";
-      }
-      pleditVm.rows= activePlate.plate.wells;
-      pleditVm.rowsDisplay = [].concat(pleditVm.rows);
-
-      pleditVm.numberOfRows = activePlate.plate.numberOfRows;
-      pleditVm.numberOfColumns = activePlate.plate.numberOfColumns;
-
-      pleditVm.labels = activePlate.plate.wellLabels;
-      pleditVm.labelsDisplay = [].concat(pleditVm.labels);
-      pleditVm.filterPlateEditor.labels = pleditVm.labels;
-    }
-*/
     function leftTable() {
       if(pleditVm.multiselectWell.mode) {
         pleditVm.multiselectWell.secondwell_row = "";
