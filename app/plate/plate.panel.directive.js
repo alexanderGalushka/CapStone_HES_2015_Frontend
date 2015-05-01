@@ -34,6 +34,9 @@
 
     function setActivePlate (plate){
       var plateres;
+      var minValue = 0;
+      var maxValue = 0;
+
       activePlate.plate  = plate;
       activePlate.plate.wellsDisplay = [].concat(activePlate.plate.wells);
 
@@ -58,7 +61,22 @@
           }
           activePlateResult.plateResult.valueslider = plateres.timeStamps[0].value;
 
-          activePlateResult.activeMeasurement = plateres.measurements
+
+          activePlateResult.plateResult.activeMeasurement = plateres.measurements[0];
+
+          for (var i = 0; i < plateres.measurements[0].wells.length; i++) {
+            if(i === 0){
+              minValue = parseFloat(plateres.measurements[0].wells[0].value);
+              maxValue = parseFloat(plateres.measurements[0].wells[0].value);
+            }else{
+              if(minValue > parseFloat(plateres.measurements[0].wells[i].value))
+                minValue = parseFloat(plateres.measurements[0].wells[i].value);
+              else if(maxValue < parseFloat(plateres.measurements[0].wells[i].value))
+                maxValue = parseFloat(plateres.measurements[0].wells[i].value);
+            }
+
+          }
+          activePlateResult.plateResult.valuerange = {"minvalue":minValue, "maxvalue":maxValue};
 
         });
       }

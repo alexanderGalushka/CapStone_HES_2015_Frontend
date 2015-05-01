@@ -17,6 +17,10 @@
     $scope.ActivePlate = activePlate;
     $scope.ActivePlateResult = activePlateResult;
 
+    qcVm.boxsz = "35";
+    qcVm.wellcollors = {bckgColorH:"0",colorText:"#FFFF00"};
+
+
   }
 
 })();

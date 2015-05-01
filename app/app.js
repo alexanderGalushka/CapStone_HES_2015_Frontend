@@ -38,7 +38,9 @@
       'plateresults',
       'measurmentsfilter',
       "qc.data.model",
-      'qc'
+      'qc',
+      'qcsinglewell',
+      'qcwellattrfilter'
     ])
 
     .config(configAdam);
