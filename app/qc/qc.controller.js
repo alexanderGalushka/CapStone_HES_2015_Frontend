@@ -8,13 +8,14 @@
     .controller('QcCtrl',QcCtrl)
 
 
-  QcCtrl.$inject = ["$scope", "activeProject", "activePlate"];
+  QcCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "rangeFilter"];
 
-  function QcCtrl($scope, activeProject, activePlate) {
+  function QcCtrl($scope, activeProject, activePlate, activePlateResult, range) {
     var qcVm = this;
 
     $scope.ActiveProject = activeProject.project;
     $scope.ActivePlate = activePlate;
+    $scope.ActivePlateResult = activePlateResult;
 
   }
 

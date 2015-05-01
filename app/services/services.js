@@ -19,5 +19,6 @@ angular.module('adamServices', ['ngResource'])
     activePlateResult.plateResult = "";
   })
 
+
 ;
 

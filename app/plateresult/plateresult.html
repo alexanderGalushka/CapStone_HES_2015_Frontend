@@ -27,7 +27,7 @@
     </tr>
     <tr>
       <th st-sort="measurementType">Measurement type</th>
-      <th st-sort="date">Date</th>
+      <th st-sort="date">TimeStamp</th>
       <th st-sort="zFactor">zFactor</th>
       <th st-sort="zPrimeFactor">zPrimeFactor</th>
     </tr>
@@ -41,12 +41,20 @@
     <tbody>
     <tr st-select-row="measurement" ng-repeat="measurement in ActivePlateResult.plateResult.measurements">
       <td>{{measurement.measurementType}}</td>
-      <td>{{measurement.date}}</td>
+      <td>{{measurement.timeStamp}}</td>
       <td>{{measurement.zFactor}}</td>
       <td>{{measurement.zPrimeFactor}}</td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="2" class="text-center">
+        <div st-pagination="" st-items-by-page="15"></div>
+      </td>
+    </tr>
+    </tfoot>
   </table>
 
 
 </div>
+

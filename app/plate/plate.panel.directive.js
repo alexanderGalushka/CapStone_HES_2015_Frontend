@@ -40,7 +40,26 @@
       if(plate !== null) {
         plateres = Qc.get({"id": plate.id},function(){
           activePlateResult.plateResult = plateres;
-          console.log('Qc result', plateres);
+          activePlateResult.plateResult.options = {
+            from: 1,
+            to: 5,
+            floor: true,
+            step: 1,
+            dimension: "",
+            vertical: false,
+            scale: [],
+            callback: function(value, elt) {
+              //console.log(value);
+            }
+          };
+          activePlateResult.plateResult.options.to = plateres.timeStamps.length;
+          for (var i = 0; i < plateres.timeStamps.length; i++) {
+            activePlateResult.plateResult.options.scale.push(plateres.timeStamps[i].value);
+          }
+          activePlateResult.plateResult.valueslider = plateres.timeStamps[0].value;
+
+          activePlateResult.activeMeasurement = plateres.measurements
+
         });
       }
     }
