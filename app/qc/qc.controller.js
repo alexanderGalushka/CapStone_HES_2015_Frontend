@@ -27,8 +27,13 @@
       var minValue = 0;
       var maxValue = 0;
 
+      if(sliderIndex === null){
+        sliderIndex = 1;
+      }
       console.log(type);
       console.log(sliderIndex);
+
+
       for (var i = 0; i < plateres.measurements.length; i++) {
         if(plateres.measurements[i].measurementType === type &&
           plateres.measurements[i].timeStamp === plateres.options.scale[sliderIndex - 1]) {

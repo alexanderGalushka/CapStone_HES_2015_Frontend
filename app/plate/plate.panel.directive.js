@@ -101,7 +101,7 @@
 
           }
           activePlateResult.plateResult.valuerange = {"minvalue":minValue, "maxvalue":maxValue};
-
+          activePlateResult.plateResult.valueslider = 1;
         });
       }
     }

@@ -19,6 +19,7 @@
       'smart-table',
       'mgcrea.ngStrap',
       'ngSlider',
+      'ngFileUpload',
       // application modules
       'adamServices',
       'navbarAdam',

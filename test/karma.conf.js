@@ -30,6 +30,8 @@ module.exports = function(config) {
       'bower_components/angular-smart-table/dist/smart-table.js',
       'bower_components/ng-slider/dist/ng-slider.min.js',
       'bower_components/dygraphs/dygraph-combined.js',
+      'bower_components/ng-file-upload/ng-file-upload.js',
+      'bower_components/ng-file-upload-shim/ng-file-upload-shim.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

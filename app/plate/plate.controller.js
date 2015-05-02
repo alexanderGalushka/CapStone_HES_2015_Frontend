@@ -23,9 +23,9 @@
     plateVm.deletePlate = deletePlate;
     plateVm.clearActiveProject = clearActiveProject;
 
-
     plateVm.plates = Plate.query();
     plateVm.platesDisplay = [].concat(plateVm.plates);
+
 
 
     function setActivePlate(plate){

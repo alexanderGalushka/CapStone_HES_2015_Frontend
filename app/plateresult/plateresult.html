@@ -17,9 +17,9 @@
       <th>User &nbsp;{{ActivePlateResult.plateResult.user}}</th>
 
       <th ng-show="ActivePlate.plate">
-        <button type="button" class="btn btn-sm btn-success" data-template="components/modal/aside.tpl.demo.html"
+        <button type="button" class="btn btn-sm btn-success" data-template="plateresult/aside.download.result.html"
                 data-placement="left" data-animation="am-slide-left" bs-aside="aside" data-container="body"
-                content= "x" title="Add project {{project.name}}" ng-click="addNewProject()">
+                content= "x" title="Upload result for {{ ActiveProject.project.name}} {{ ActivePlate.plate.name}}" ng-click="uploadResultSet()">
           <i class="glyphicon glyphicon-plus" >
           </i> Download results
         </button>
