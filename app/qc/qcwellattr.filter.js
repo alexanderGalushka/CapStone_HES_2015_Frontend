@@ -15,17 +15,14 @@
 
           if(valueRange.minvalue != valueRange.maxvalue) {
             bckgColorS = (( parseFloat(well.value) - parseFloat(valueRange.minvalue)) / (parseFloat(valueRange.maxvalue) - parseFloat(valueRange.minvalue))) * 100;
-            console.log(JSON.stringify(bckgColorS, null, 4));
           }
           else
             bckgColorS = 0;
 
           bckgColor = "hsl(" + wellColors.bckgColorH + ",100%, " + bckgColorS + "%)";
 
-          //console.log(JSON.stringify(well.value, null, 4));
-          //console.log(JSON.stringify(parseFloat(well.value), null, 4));
-
-          console.log(JSON.stringify(bckgColor, null, 4));
+          if(bckgColorS > 80)
+            textColor = "hsl(" + wellColors.bckgColorH + ",100%, 0%)";
 
           if((well.ifValid === "false") && (well.controlType === "" || well.controlType === null) )
             textColor = bckgColor;
