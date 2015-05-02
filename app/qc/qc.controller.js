@@ -16,19 +16,24 @@
     $scope.ActiveProject = activeProject.project;
     $scope.ActivePlate = activePlate;
     $scope.ActivePlateResult = activePlateResult;
+    $scope.ActivePlateResult.plateResult.valueslider = 1;
 
     qcVm.boxsz = "35";
     qcVm.wellcollors = {bckgColorH:"0",colorText:"#FFFF00"};
 
     qcVm.setActiveMeasurement = setActiveMeasurement;
 
-    function setActiveMeasurement(type, plateres) {
+    function setActiveMeasurement(type, sliderIndex, plateres) {
       var minValue = 0;
       var maxValue = 0;
 
+      console.log(type);
+      console.log(sliderIndex);
       for (var i = 0; i < plateres.measurements.length; i++) {
-        if(plateres.measurements[i].measurementType === type.name) {
+        if(plateres.measurements[i].measurementType === type &&
+          plateres.measurements[i].timeStamp === plateres.options.scale[sliderIndex - 1]) {
           plateres.activeMeasurement = plateres.measurements[i];
+          console.log("Found IT!");
 
           for (var j = 0; j < plateres.measurements[i].wells.length; j++) {
             if(j === 0){
@@ -44,6 +49,7 @@
           }
 
           plateres.valuerange  = {"minvalue":minValue, "maxvalue":maxValue};
+          break;
         }
       }
 

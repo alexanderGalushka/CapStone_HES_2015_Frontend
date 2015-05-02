@@ -24,7 +24,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr st-select-row="type" ng-repeat="type in ActivePlateResult.plateResult.measurementTypes" ng-click="qcVm.setActiveMeasurement(type,ActivePlateResult.plateResult)">
+        <tr st-select-row="type" ng-repeat="type in ActivePlateResult.plateResult.measurementTypes"
+            ng-click="qcVm.setActiveMeasurement(type.name,ActivePlateResult.plateResult.valueslider, ActivePlateResult.plateResult)">
           <td>{{type.name}}</td>
         </tr>
         </tbody>
@@ -43,7 +44,7 @@
 
 
 <h4>Measurement type <span class="label label-primary">{{ActivePlateResult.plateResult.activeMeasurement.measurementType}}</span>
-  Timestamp <span class="label label-success">{{ActivePlateResult.plateResult.activeMeasurement.timeStamp}}</span>
+  Timestamp {{ActivePlateResult.plateResult.valueslider}} <span class="label label-success">{{ActivePlateResult.plateResult.activeMeasurement.timeStamp}}</span>
 </h4>
 
 <div class="panel-group col-md-8"><label style="white-space: nowrap;border:solid 4px black">
@@ -60,9 +61,10 @@
 
 
 <div class="panel-group col-md-8">
-  <input ng-model="ActivePlateResult.plateResult.valueslider" type="text" id="mySlider1" slider options="ActivePlateResult.plateResult.options" />
+  <input ng-model="ActivePlateResult.plateResult.valueslider" type="text" id="mySlider1" slider options="ActivePlateResult.plateResult.options"
+         ng-change="qcVm.setActiveMeasurement(ActivePlateResult.plateResult.activeMeasurement.measurementType, ActivePlateResult.plateResult.valueslider, ActivePlateResult.plateResult)"/>
 </div>
 
-<div class="panel-group col-md-8" style="white-space: nowrap">{{ActivePlateResult.plateResult.valuerange.minvalue}}<!--
+<div class="panel-group col-md-8" style="white-space: nowrap"><span class="label label-info">{{ActivePlateResult.plateResult.valuerange.minvalue}}</span><!--
 --><label ng-repeat="i in []|range:0:50"style="background-color:hsl(0,100%,{{i*2}}%);width: 20px;height: 20px"></label><!--
-  -->{{ActivePlateResult.plateResult.valuerange.maxvalue}}</div>
+  --><span class="label label-info">{{ActivePlateResult.plateResult.valuerange.maxvalue}}</span></div>

@@ -24,7 +24,7 @@
 
     $scope.ActiveProject = activeProject;
     $scope.ActivePlate = activePlate;
-    $scope.activePlateResult = activePlateResult;
+    //$scope.ActivePlateResult = activePlateResult;
 
     platepanVm.setActivePlate = setActivePlate;
 
@@ -52,7 +52,31 @@
             vertical: false,
             scale: [],
             callback: function(value, elt) {
-              //console.log(value);
+              /*
+               for (var i = 0; i < activePlateResult.plateResult.measurements.length; i++) {
+               if(activePlateResult.plateResult.measurements[i].timeStamp === activePlateResult.plateResult.options.scale[value-1] &&
+               activePlateResult.plateResult.measurements[i].measurementType === activePlateResult.plateResult.activeMeasurement.measurementType) {
+               activePlateResult.plateResult.activeMeasurement = activePlateResult.plateResult.measurements[i];
+
+               for (var j = 0; j < activePlateResult.plateResult.measurements[i].wells.length; j++) {
+               if(j === 0){
+               minValue = parseFloat(activePlateResult.plateResult.measurements[i].wells[0].value);
+               maxValue = parseFloat(activePlateResult.plateResult.measurements[i].wells[0].value);
+               }else{
+               if(minValue > parseFloat(activePlateResult.plateResult.measurements[i].wells[j].value))
+               minValue = parseFloat(activePlateResult.plateResult.measurements[i].wells[j].value);
+               else if(maxValue < parseFloat(activePlateResult.plateResult.measurements[i].wells[j].value))
+               maxValue = parseFloat(activePlateResult.plateResult.measurements[i].wells[j].value);
+               }
+
+               }
+
+               activePlateResult.plateResult.valuerange  = {"minvalue":minValue, "maxvalue":maxValue};
+
+               break;
+               }
+               }*/
+
             }
           };
           activePlateResult.plateResult.options.to = plateres.timeStamps.length;

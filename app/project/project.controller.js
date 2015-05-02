@@ -95,7 +95,11 @@
     };
 
     function addCollaborator(collaborators,newCollaborator){
-      collaborators.push(newCollaborator);
+      if(collaborators.indexOf(newCollaborator) >= 0){
+        alert("User " + newCollaborator.name + " is already added as collaborator");
+      }
+      else
+        collaborators.push(newCollaborator);
     };
 
   }
