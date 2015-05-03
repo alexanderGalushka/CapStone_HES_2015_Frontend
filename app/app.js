@@ -41,7 +41,10 @@
       "qc.data.model",
       'qc',
       'qcsinglewell',
-      'qcwellattrfilter'
+      'qcwellattrfilter',
+      'loadresult',
+      'classgridfilter',
+      'well.invalidate.data.model'
     ])
 
     .config(configAdam);
