@@ -8,9 +8,9 @@
     .controller('PlateResultsCtrl',PlateResultsCtrl)
 
 
-  PlateResultsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult" , "Upload", "classgridFilter"];
+  PlateResultsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult" , "Upload", "classgridFilter", "Qc"];
 
-  function PlateResultsCtrl($scope, activeProject, activePlate, activePlateResult, Upload, classgrid) {
+  function PlateResultsCtrl($scope, activeProject, activePlate, activePlateResult, Upload, classgrid, Qc) {
     var plresVm = this;
 
     $scope.ActiveProject = activeProject.project;
@@ -19,6 +19,7 @@
     plresVm.aside = false;
 
     plresVm.upload = upload;
+    plresVm.deleteResult = deleteResult;
 
     plresVm.log = '';
 
@@ -43,6 +44,12 @@
           });
         }
       }
+    }
+
+    function deleteResult(plateResult){
+      console.log(JSON.stringify(plateResult, null, 4));
+      Qc.delete({"id":plateResult.plateid});
+      plateResult = null;
     }
 
   }

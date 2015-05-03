@@ -8,7 +8,7 @@
     .controller('QcCtrl',QcCtrl)
 
 
-  QcCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "rangeFilter", "classgridFilter", "wellBoxSize"];
+  QcCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "rangeFilter", "classgridFilter", "wellBoxSize" ];
 
   function QcCtrl($scope, activeProject, activePlate, activePlateResult, range, classgrid, wellBoxSize) {
     var qcVm = this;
@@ -47,6 +47,7 @@
     function setActiveMeasurement(type, sliderIndex, plateres) {
       var minValue = 0;
       var maxValue = 0;
+      var foundFirstValidWell = false;
 
       if(sliderIndex === null){
         sliderIndex = 1;
@@ -62,25 +63,28 @@
           console.log("Found IT!");
 
           for (var j = 0; j < plateres.measurements[i].wells.length; j++) {
-            if(j === 0){
-              minValue = parseFloat(plateres.measurements[i].wells[0].value);
-              maxValue = parseFloat(plateres.measurements[i].wells[0].value);
-            }else{
-              if(minValue > parseFloat(plateres.measurements[i].wells[j].value))
+            if(parseFloat(plateres.measurements[i].wells[j].value) != 777) {
+              if (!foundFirstValidWell) {
                 minValue = parseFloat(plateres.measurements[i].wells[j].value);
-              else if(maxValue < parseFloat(plateres.measurements[i].wells[j].value))
                 maxValue = parseFloat(plateres.measurements[i].wells[j].value);
-            }
+                foundFirstValidWell = true;
+              } else {
+                if (minValue > parseFloat(plateres.measurements[i].wells[j].value))
+                  minValue = parseFloat(plateres.measurements[i].wells[j].value);
+                else if (maxValue < parseFloat(plateres.measurements[i].wells[j].value))
+                  maxValue = parseFloat(plateres.measurements[i].wells[j].value);
+              }
 
+            }
           }
 
           plateres.valuerange  = {"minvalue":minValue, "maxvalue":maxValue};
           break;
         }
       }
-
-
     }
+
+
   }
 
 })();

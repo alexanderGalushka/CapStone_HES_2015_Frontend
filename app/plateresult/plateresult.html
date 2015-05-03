@@ -24,6 +24,14 @@
           </i> Download results
         </button>
       </th>
+      <th ng-show="ActivePlateResult.resultExists">
+        <button type="button" class="btn btn-sm btn-danger" data-template="plateresult/modal.delete.result.html"
+                data-animation="am-fade-and-slide-top" bs-modal="modal"
+                content= "x" data-container="body" title="Delete result?">
+          <i class="glyphicon glyphicon-plus" >
+          </i> Delete results
+        </button>
+      </th>
       <th>
         <button type="button" class="btn btn-xs pull-right" ng-model="plresVm.aside" bs-checkbox ng-show="plresVm.aside" >
           <i class="glyphicon glyphicon-chevron-left">

@@ -12,6 +12,8 @@
       var plateres;
       var minValue = 0;
       var maxValue = 0;
+      var foundFirstValidWell = false;
+
       plateres = Qc.get({"id": plateid},function(){
         activePlateResult.plateResult = plateres;
         activePlateResult.plateResult.options = {
@@ -32,14 +34,19 @@
         activePlateResult.plateResult.activeMeasurement = plateres.measurements[0];
 
         for (var i = 0; i < plateres.measurements[0].wells.length; i++) {
-          if(i === 0){
-            minValue = parseFloat(plateres.measurements[0].wells[0].value);
-            maxValue = parseFloat(plateres.measurements[0].wells[0].value);
-          }else{
-            if(minValue > parseFloat(plateres.measurements[0].wells[i].value))
+          if(parseFloat(plateres.measurements[0].wells[i].value) != 777) {
+            if (!foundFirstValidWell) {
               minValue = parseFloat(plateres.measurements[0].wells[i].value);
-            else if(maxValue < parseFloat(plateres.measurements[0].wells[i].value))
               maxValue = parseFloat(plateres.measurements[0].wells[i].value);
+              foundFirstValidWell = true;
+            } else {
+
+              if (minValue > parseFloat(plateres.measurements[0].wells[i].value))
+                minValue = parseFloat(plateres.measurements[0].wells[i].value);
+              else if (maxValue < parseFloat(plateres.measurements[0].wells[i].value))
+                maxValue = parseFloat(plateres.measurements[0].wells[i].value);
+
+            }
           }
         }
         activePlateResult.plateResult.valuerange = {"minvalue":minValue, "maxvalue":maxValue};
