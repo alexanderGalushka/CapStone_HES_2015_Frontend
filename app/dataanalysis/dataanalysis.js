@@ -418,9 +418,9 @@
       {
         var tmpArray = [];
 
-          var onWellRequestComplete = function() 
+          var onWellRequestComplete = function(response) 
           {
-             for (var index in responce.data)
+             for (var index in response.data)
              {
                   var new_project = 
                   {
@@ -878,7 +878,7 @@
     function($scope, $log, DAService, $http, $q) {
 
     
-      var onError = function()
+      var onError = function(reason)
       {
         var dAasd  = 123;
       }
@@ -887,10 +887,8 @@
       {
           $http.get("/adam/rest/project/").then(onPrjectRequestComplete, onError);
       }
-
-      getProjectsFromDB();
-
-      var onPrjectRequestComplete = function() 
+      
+      var onPrjectRequestComplete = function(response) 
       {
         $scope.labels = DAService.labels.slice(1); // remove default x-axis label, don't want that in the dropdown menu
         $scope.showLabels = [];
@@ -932,7 +930,7 @@
         $scope.ySeries = [];
         $scope.yCount = 1;
 
-         for (var index in responce.data)
+         for (var index in response.data)
          {
 
               var new_project = 
@@ -949,6 +947,8 @@
 
           resetDataSeries();
       }
+
+      getProjectsFromDB();
 
       addDataSeries = function(dsIndex) {
         currID = 'menu-' + dsIndex;
