@@ -8,14 +8,15 @@
     .controller('PlateResultsCtrl',PlateResultsCtrl)
 
 
-  PlateResultsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult" , "Upload"];
+  PlateResultsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult" , "Upload", "classgridFilter"];
 
-  function PlateResultsCtrl($scope, activeProject, activePlate, activePlateResult, Upload) {
+  function PlateResultsCtrl($scope, activeProject, activePlate, activePlateResult, Upload, classgrid) {
     var plresVm = this;
 
     $scope.ActiveProject = activeProject.project;
     $scope.ActivePlate = activePlate;
     $scope.ActivePlateResult = activePlateResult;
+    plresVm.aside = false;
 
     plresVm.upload = upload;
 

@@ -8,20 +8,41 @@
     .controller('QcCtrl',QcCtrl)
 
 
-  QcCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "rangeFilter"];
+  QcCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult", "rangeFilter", "classgridFilter", "wellBoxSize"];
 
-  function QcCtrl($scope, activeProject, activePlate, activePlateResult, range) {
+  function QcCtrl($scope, activeProject, activePlate, activePlateResult, range, classgrid, wellBoxSize) {
     var qcVm = this;
 
     $scope.ActiveProject = activeProject.project;
     $scope.ActivePlate = activePlate;
     $scope.ActivePlateResult = activePlateResult;
-    $scope.ActivePlateResult.plateResult.valueslider = 1;
+    $scope.WellBoxSize = wellBoxSize;
+    qcVm.aside = false;
 
-    qcVm.boxsz = "35";
+    if($scope.ActivePlateResult != null && $scope.ActivePlateResult.plateResult != null && $scope.ActivePlateResult.plateResult != "" &&
+      $scope.ActivePlateResult.resultExists === true) {
+      $scope.ActivePlateResult.plateResult.valueslider = 1;
+      $scope.ActivePlateResult.resultExists = true;
+    }
+    else
+      $scope.ActivePlateResult.resultExists = false;
+
+    //qcVm.boxsz = "35";
     qcVm.wellcollors = {bckgColorH:"0",colorText:"#FFFF00"};
 
     qcVm.setActiveMeasurement = setActiveMeasurement;
+
+    qcVm.boxsizerange = {
+      from: 25,
+      to: 100,
+      floor: true,
+      step: 1,
+      dimension: " px",
+      vertical: false,
+      callback: function(value, elt) {
+        //console.log(value);
+      }
+    };
 
     function setActiveMeasurement(type, sliderIndex, plateres) {
       var minValue = 0;
@@ -57,7 +78,6 @@
           break;
         }
       }
-
 
 
     }
