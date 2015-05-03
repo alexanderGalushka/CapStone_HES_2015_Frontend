@@ -3,53 +3,76 @@
   //TODO: remove displayed labels from menus?
   //TODO: separate x-axis labels from y-axis labels
 
-  var app = angular.module('hesAdam',[]);
+  var app = angular.module('adamApp');
 
-  app.service('DAService', ['$rootScope',
-    function($rootScope) {
+  app.service('DAService', ['$rootScope', '$http', '$q',
+    function($rootScope, $http, $q) {
 
-//      var projects = [{
-//        "title": "Project b",
-//        "description": "Cancer research in 2015",
-//        "owner": "Cindy",
-//        "tags": [{
-//          name: "multi project"
-//        }, {
-//          name: "mouse"
-//        }],
-//        "date": "2/2/2015",
-//        "nmbrPlates": 8,
-//        "selected": false
-//      }, {
-//        "title": "Project a",
-//        "description": "Amazing new medicine",
-//        "owner": "Nik",
-//        "date": "2/12/3015",
-//        "nmbrPlates": 8,
-//        "selected": false
-//      }];
+      //      var projects = [{
+      //        "title": "Project b",
+      //        "description": "Cancer research in 2015",
+      //        "owner": "Cindy",
+      //        "tags": [{
+      //          name: "multi project"
+      //        }, {
+      //          name: "mouse"
+      //        }],
+      //        "date": "2/2/2015",
+      //        "nmbrPlates": 8,
+      //        "selected": false
+      //      }, {
+      //        "title": "Project a",
+      //        "description": "Amazing new medicine",
+      //        "owner": "Nik",
+      //        "date": "2/12/3015",
+      //        "nmbrPlates": 8,
+      //        "selected": false
+      //      }];
 
-	  var projects = []
+      var projects = []
 
-      jQuery.ajax({
+      /*jQuery.ajax({
           url:    '/adam/rest/project/',
           success: function(data) {
 
-        	  for (var index in data){
+            for (var index in data){
 
-          		var new_project = {
-          			"title" : data[index].name,
-          			"description" : data[index].description,
-          			"owner" : data[index].owner,
-          			"date" : data[index].creationDate,
-          			"id" : data[index].id,
-          			"selected" : false
-          		}
-          		projects.push(new_project);
-          	 }
+              var new_project = {
+                "title" : data[index].name,
+                "description" : data[index].description,
+                "owner" : data[index].owner,
+                "date" : data[index].creationDate,
+                "id" : data[index].id,
+                "selected" : false
+              }
+              projects.push(new_project);
+             }
           },
           async: false
-     });
+     });*/
+
+    
+      /*var onPrjectRequestComplete = function () {
+        for (var index in responce.data)
+         {
+
+              var new_project = 
+              {
+                "title" : data[index].name,
+                "description" : data[index].description,
+                "owner" : data[index].owner,
+                "date" : data[index].creationDate,
+                "id" : data[index].id,
+                "selected" : false
+              }
+              projects.push(new_project);
+          }
+    }
+    
+    $http.get("http://54.149.197.234/adam/rest/project/").then(onPrjectRequestComplete);*/
+
+
+
 
       var currentWellCollection = [];
 
@@ -294,11 +317,7 @@
         return subs;
       };
 
-
-
-
       var generateRandomItem = function() {
-
         var wellLabel = ['Snake Data', 'Mouse Data', 'Cow Data', 'Gimmick Data'];
         var compound = ['verapamil', 'alcohol', 'ph20', 'x30z'];
         var substrate = ['propophol', 'ix30', 'po31', 'mx70'];
@@ -392,27 +411,52 @@
         else
           project.selected = true;
       };
-      var getWells = function(projectTitle) {
+
+      var map_project_wells;
+
+      var getWellsFromDB = function(project_id)
+      {
+        var tmpArray = [];
+
+          var onWellRequestComplete = function(response) 
+          {
+             for (var index in response.data)
+             {
+                  var new_project = 
+                  {
+                    "title" : data[index].name,
+                    "description" : data[index].description,
+                    "owner" : data[index].owner,
+                    "date" : data[index].creationDate,
+                    "id" : data[index].id,
+                    "selected" : false
+                  }
+                  tmpArray.push(new_project);
+              }
+          }
+          
+          $http.get("/adam/getWells/" + project_id).then(onWellRequestComplete);
+      }
+
+
+
+      var getWells = function(projectTitle) 
+      {
         var project = searchForProject(projectTitle);
 
-        var reeturnArray = [];
+        if (map_project_wells == 'undefined')
+        {
+          for (var i = 0, iLen = projects.length; i < iLen; i++) 
+          {
 
-        jQuery.ajax({
-            url:    '/adam/getWells/' + project.id,
-            success: function(data) {
-              reeturnArray = data;
-            },
-            async: false
-        });
-
-        for (var p = 0, pLen = reeturnArray.length; p < pLen; p++) {
-          var element = reeturnArray[p];
-          element.id = p;
+              var proj = projects[i];
+              map_project_wells[proj.id] = getWellsFromDB(proj.id);
+          }
         }
 
-
-        return reeturnArray;
+        return map_project_wells[project.id];
       };
+
       var getMeasurements = function() {
         var well;
         var measurementData = [];
@@ -466,15 +510,14 @@
 
       // pulled 3/30/15 from http://stackoverflow.com/questions/17428587/transposing-a-2d-array-in-javascript
       var transposeMatrix = function(matrix) {
-        if(matrix.length > 0) {
+        if (matrix.length > 0) {
           var t = matrix[0].map(function(col, i) {
             return matrix.map(function(row) {
               return row[i];
             });
           });
           return t;
-        }
-        else {
+        } else {
           console.log('transposeMatrix: invalid argument: ' + matrix);
         }
         return -1;
@@ -545,11 +588,9 @@
           }
         });
 
-        if (dummyAllData[0].hasOwnProperty("time"))
-        {
-            dummyData[0] = dummyAllData[0].time;
-        }
-        else
+        if (dummyAllData[0].hasOwnProperty("time")) {
+          dummyData[0] = dummyAllData[0].time;
+        } else
           dummyData[0] = generateSequence(1, maxlen, 1);
 
         if (dummyData[0].length === 0)
@@ -563,12 +604,7 @@
           dummyLabels.push(i.labelName);
         });
 
-
-
       };
-
-
-
 
 
       var dataIndices = [];
@@ -581,8 +617,7 @@
 
         if (arrIndices.length === 0) {
           console.log('Warning: attempted to call DAService.updateData() with empty first argument');
-        }
-        else {
+        } else {
           var i;
           switch (action) {
             case 'setX':
@@ -648,7 +683,7 @@
 
       // TEMPORARY, WILL BE REPLACED BY CALL TO BACKEND
       // pulled from http://trentrichardson.com/2010/04/06/compute-linear-regressions-in-javascript/ on 4/26/15
-      function linearRegression(y,x){
+        function linearRegression(y, x) {
           var lr = {};
           var n = y.length;
           var sum_x = 0;
@@ -661,21 +696,21 @@
 
             sum_x += x[i];
             sum_y += y[i];
-            sum_xy += (x[i]*y[i]);
-            sum_xx += (x[i]*x[i]);
-            sum_yy += (y[i]*y[i]);
+            sum_xy += (x[i] * y[i]);
+            sum_xx += (x[i] * x[i]);
+            sum_yy += (y[i] * y[i]);
           }
 
-          lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
-          lr['intercept'] = (sum_y - lr.slope * sum_x)/n;
-          lr['r2'] = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
+          lr['slope'] = (n * sum_xy - sum_x * sum_y) / (n * sum_xx - sum_x * sum_x);
+          lr['intercept'] = (sum_y - lr.slope * sum_x) / n;
+          lr['r2'] = Math.pow((n * sum_xy - sum_x * sum_y) / Math.sqrt((n * sum_xx - sum_x * sum_x) * (n * sum_yy - sum_y * sum_y)), 2);
 
           return lr;
-      }
+        }
 
       var curveFitLines = [];
       var curveFitEquations = [];
-      for(var i in dummyLabels) {
+      for (var i in dummyLabels) {
         curveFitLines.push([]);
         curveFitEquations.push('');
       }
@@ -685,16 +720,16 @@
         dataIndex = dataIndices.indexOf(index);
         xData = data[0];
         yData = data[dataIndex];
-        lr = linearRegression(yData,xData);
+        lr = linearRegression(yData, xData);
         equation = 'y = ' + lr.slope + 'x';
-        if(lr.intercept > 0) {
+        if (lr.intercept > 0) {
           equation = equation + ' + ' + lr.intercept;
         }
-        if(lr.intercept < 0) {
+        if (lr.intercept < 0) {
           equation = equation + ' - ' + Math.abs(lr.intercept);
         }
         curveFitEquations[index] = equation;
-        for(var i in xData) {
+        for (var i in xData) {
           curveFitLines[index].push(lr.slope * xData[i] + lr.intercept);
         }
         plotCurveFit();
@@ -708,8 +743,8 @@
       }; // end of removeCurveFit()
 
       var plotCurveFit = function() {
-        for(var i in curveFitLines) {
-          if(i.length > 0) {
+        for (var i in curveFitLines) {
+          if (i.length > 0) {
             data.push(curveFitLines[i]);
             plotLabels.push(curveFitEquations[i]);
             options.series[curveFitEquations[i]].strokeWidth = 1.5;
@@ -721,7 +756,7 @@
 
       var hasCurveFit = function(thisLabel) {
         index = dummyLabels.indexOf(thisLabel);
-        if(curveFitLines[index].length > 0) {
+        if (curveFitLines[index].length > 0) {
           return true;
         }
         return false;
@@ -745,8 +780,11 @@
 
       var graphIt = function() {
         //options.xlabel = "Time (minutes)";
-        g = new Dygraph(document.getElementById('graph'), plotData, options);
-        return g;
+        if (plotData.length != 0)
+        {
+          g = new Dygraph(document.getElementById('graph'), plotData, options);
+          return g;
+        }
       };
 
       var clearLabels = function() {
@@ -832,54 +870,85 @@
     }
   ]);
 
-  var dataAnalysisModule = angular.module('dataAnalysis', ['ui.bootstrap']);
+  //var dataAnalysisModule = angular.module('dataAnalysis', ['ui.bootstrap']);
 
   var DUMMYDEFAULTDATASERIESTOPLOT = [7, 8, 9];
 
-  app.controller('DataAnalysisController', ['$scope', '$routeParams', 'DAService',
-    function($scope, $routeParams, DAService) {}
-  ]);
+  app.controller('DropdownCtrl', ['$scope', '$log', 'DAService', '$http', '$q',
+    function($scope, $log, DAService, $http, $q) {
 
-
-
-  app.controller('DropdownCtrl', ['$scope', '$log', 'DAService', "deleteProject", "activeProject", "setActiveProject",
-    function($scope, $log, DAService, deleteProject, activeProject, setActiveProject) {
-
-      $scope.labels = DAService.labels.slice(1); // remove default x-axis label, don't want that in the dropdown menu
-      $scope.showLabels = [];
-      for(var i in $scope.labels) {
-        $scope.showLabels.push(true);
-      }
-      $scope.graphTypes = ['scatter', 'line', 'curve fit'];
-      $scope.xLabels = ['time', 'dosage'] //TODO: NEED TO POPULATE THIS FROM DATA
-      var yCount = 1;
-
-      $scope.ActiveProject = activeProject.activeId;
-      $scope.filterowner = '';
-
-      for (var w = 0, wLen = DAService.projects.length; w < wLen; w++) {
-        var project = DAService.projects[w];
-        project.selected = true;
-        project.nmbrPlates = DAService.getWells(project.title).length;
-        project.selected = false;
+    
+      var onError = function(reason)
+      {
+        var dAasd  = 123;
       }
 
-      $scope.projects = DAService.projects;
+      var getProjectsFromDB = function()
+      {
+          $http.get("/adam/rest/project/").then(onPrjectRequestComplete, onError);
+      }
+      
+      var onPrjectRequestComplete = function(response) 
+      {
+        $scope.labels = DAService.labels.slice(1); // remove default x-axis label, don't want that in the dropdown menu
+        $scope.showLabels = [];
+        for (var i in $scope.labels) 
+        {
+          $scope.showLabels.push(true);
+        }
+        $scope.graphTypes = ['scatter', 'line', 'curve fit'];
+        $scope.xLabels = ['time', 'dosage'] //TODO: NEED TO POPULATE THIS FROM DATA
+        var yCount = 1;
 
-      $scope.projectsDisplay = [].concat($scope.projects);
+        //$scope.ActiveProject = activeProject.activeId;
+        $scope.filterowner = '';
 
-      $scope.wellCollection = [];
+        for (var w = 0, wLen = DAService.projects.length; w < wLen; w++) {
+          var project = DAService.projects[w];
+          project.selected = true;
+          project.nmbrPlates = DAService.getWells(project.title).length;
+          project.selected = false;
+        }
 
-      dsPLACEHOLDER = 'Select data series';
-      gtPLACEHOLDER = 'Select graph type';
-      xPLACEHOLDER = 'Select x-axis variable';
-      $scope.selectedXAxisLabel = xPLACEHOLDER;
-      //DAService.updateData([0], 'setX');
-      DAService.options.labels = ['x-axis','y-axis'];
-      var g = new Dygraph(document.getElementById('graph'), [[0,0],[0,0]],  DAService.options);
+        $scope.projects = DAService.projects;
 
-      $scope.ySeries = [];
-      $scope.yCount = 1;
+        $scope.projectsDisplay = [].concat($scope.projects);
+
+        $scope.wellCollection = [];
+
+        dsPLACEHOLDER = 'Select data series';
+        gtPLACEHOLDER = 'Select graph type';
+        xPLACEHOLDER = 'Select x-axis variable';
+        $scope.selectedXAxisLabel = xPLACEHOLDER;
+        //DAService.updateData([0], 'setX');
+        DAService.options.labels = ['x-axis', 'y-axis'];
+        var g = new Dygraph(document.getElementById('graph'), [
+          [0, 0],
+          [0, 0]
+        ], DAService.options);
+
+        $scope.ySeries = [];
+        $scope.yCount = 1;
+
+         for (var index in response.data)
+         {
+
+              var new_project = 
+              {
+                "title" : data[index].name,
+                "description" : data[index].description,
+                "owner" : data[index].owner,
+                "date" : data[index].creationDate,
+                "id" : data[index].id,
+                "selected" : false
+              }
+              projects.push(new_project);
+          }
+
+          resetDataSeries();
+      }
+
+      getProjectsFromDB();
 
       addDataSeries = function(dsIndex) {
         currID = 'menu-' + dsIndex;
@@ -899,8 +968,6 @@
         DAService.options.series = {};
         DAService.graphIt();
       };
-
-      resetDataSeries();
 
       $scope.addNewYAxisSelectionButton = function() {
         $scope.yCount = $scope.yCount + 1;
@@ -983,33 +1050,33 @@
         index = ID.split('-')[1] - 1;
 
         // do not set graph type unless there's a data series for this menu first
-        if($scope.ySeries[index].label != dsPLACEHOLDER) {
+        if ($scope.ySeries[index].label != dsPLACEHOLDER) {
           thisLabel = $scope.ySeries[index].label;
           $scope.ySeries[index].type = type;
           if (DAService.options.series.hasOwnProperty(thisLabel)) {
 
-            switch(type) {
+            switch (type) {
               case 'scatter':
-                if(DAService.hasCurveFit(thisLabel)) {
+                if (DAService.hasCurveFit(thisLabel)) {
                   DAService.removeCurveFit(thisLabel);
                 }
                 DAService.options.series[thisLabel].strokeWidth = 0.0;
                 DAService.options.series[thisLabel].pointSize = 3;
                 break;
               case 'bar':
-                if(DAService.hasCurveFit(thisLabel)) {
+                if (DAService.hasCurveFit(thisLabel)) {
                   DAService.removeCurveFit(thisLabel);
                 }
                 break;
               case 'curve fit':
-                if(!DAService.hasCurveFit(thisLabel)) {
+                if (!DAService.hasCurveFit(thisLabel)) {
                   DAService.options.series[thisLabel].strokeWidth = 0.0;
                   DAService.options.series[thisLabel].pointSize = 4;
                   DAService.addCurveFit(thisLabel);
                 }
                 break;
               case 'line':
-                if(DAService.hasCurveFit(thisLabel)) {
+                if (DAService.hasCurveFit(thisLabel)) {
                   DAService.removeCurveFit(thisLabel);
                 }
                 DAService.options.series[thisLabel].strokeWidth = 1.0;
@@ -1063,8 +1130,8 @@
 
       $scope.$watch('wellCollection', function() {
         //alert('hey, wellCollection has changed!');
-        var collection = $scope.wellCollection;
-        var length = collection.length;
+        //var collection = $scope.wellCollection;
+        //var length = collection.length;
       });
 
       $scope.updateLabels = function() {
@@ -1158,7 +1225,7 @@
             var object = {
               "labelName": well.measurementType,
               "labelData": emptyArray,
-              "time":  timeArray
+              "time": timeArray
 
             };
 
@@ -1183,7 +1250,7 @@
               var object = {
                 "labelName": well.measurementType,
                 "labelData": emptyArray,
-                 "time":  timeArray
+                "time": timeArray
               };
 
               DAService.rawData.push(object);
@@ -1223,7 +1290,10 @@
       };
 
       $scope.clearGraph = function(foo) {
-        var g = new Dygraph(document.getElementById('graph'), [[0,0],[0,0]],  DAService.options);
+        var g = new Dygraph(document.getElementById('graph'), [
+          [0, 0],
+          [0, 0]
+        ], DAService.options);
         $scope.ySeries.splice(0, $scope.ySeries.length);
       };
 
