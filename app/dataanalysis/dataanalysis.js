@@ -5,8 +5,8 @@
 
   var app = angular.module('adamApp');
 
-  app.service('DAService', ['$rootScope', '$http',
-    function($rootScope) {
+  app.service('DAService', ['$rootScope', '$http', '$q',
+    function($rootScope, $http, $q) {
 
       //      var projects = [{
       //        "title": "Project b",
@@ -51,6 +51,7 @@
           async: false
      });*/
 
+    
       /*var onPrjectRequestComplete = function () {
         for (var index in responce.data)
          {
@@ -316,11 +317,7 @@
         return subs;
       };
 
-
-
-
       var generateRandomItem = function() {
-
         var wellLabel = ['Snake Data', 'Mouse Data', 'Cow Data', 'Gimmick Data'];
         var compound = ['verapamil', 'alcohol', 'ph20', 'x30z'];
         var substrate = ['propophol', 'ix30', 'po31', 'mx70'];
@@ -414,63 +411,50 @@
         else
           project.selected = true;
       };
-      var getWells = function(projectTitle) {
+
+      var map_project_wells;
+
+      var getWellsFromDB = function(project_id)
+      {
+        var tmpArray = [];
+
+          var onWellRequestComplete = function() 
+          {
+             for (var index in responce.data)
+             {
+                  var new_project = 
+                  {
+                    "title" : data[index].name,
+                    "description" : data[index].description,
+                    "owner" : data[index].owner,
+                    "date" : data[index].creationDate,
+                    "id" : data[index].id,
+                    "selected" : false
+                  }
+                  tmpArray.push(new_project);
+              }
+          }
+          
+          $http.get("/adam/getWells/" + project_id).then(onWellRequestComplete);
+      }
+
+
+
+      var getWells = function(projectTitle) 
+      {
         var project = searchForProject(projectTitle);
 
-        var reeturnArray = [];
-
-        /*jQuery.ajax({
-            url:    '/adam/getWells/' + project.id,
-            success: function(data) {
-              reeturnArray = data;
-            },
-            async: false
-        });
-
-        for (var p = 0, pLen = reeturnArray.length; p < pLen; p++) {
-          var element = reeturnArray[p];
-          element.id = p;
-        }*/
-
-        function makeRequest() 
+        if (map_project_wells == 'undefined')
         {
-          var deferred = $q.defer();
-          var onPrjectRequestComplete = function() 
+          for (var i = 0, iLen = projects.length; i < iLen; i++) 
           {
-            for (var index in responce.data) 
-            {
 
-              var new_project = 
-              {
-                "title": data[index].name,
-                "description": data[index].description,
-                "owner": data[index].owner,
-                "date": data[index].creationDate,
-                "id": data[index].id,
-                "selected": false
-              }
-              reeturnArray.push(new_project);
-            }
+              var proj = projects[i];
+              map_project_wells[proj.id] = getWellsFromDB(proj.id);
           }
-
-          $http.get("http://54.149.197.234/adam/rest/project/").then(onPrjectRequestComplete)
-            .success(function(data, status, headers, config) 
-            {
-              //resolve the promise
-              deferred.resolve('request successful');
-
-            })
-          //if request is not successful
-          .error(function(data, status, headers, config) 
-          {
-            //reject the promise
-            deferred.reject('ERROR');
-          });
-          return deferred.promise;
         }
 
-        makeRequest();
-        return reeturnArray;
+        return map_project_wells[project.id];
       };
 
       var getMeasurements = function() {
@@ -620,12 +604,7 @@
           dummyLabels.push(i.labelName);
         });
 
-
-
       };
-
-
-
 
 
       var dataIndices = [];
@@ -895,47 +874,81 @@
 
   var DUMMYDEFAULTDATASERIESTOPLOT = [7, 8, 9];
 
-  app.controller('DropdownCtrl', ['$scope', '$log', 'DAService',
-    function($scope, $log, DAService) {
+  app.controller('DropdownCtrl', ['$scope', '$log', 'DAService', '$http', '$q',
+    function($scope, $log, DAService, $http, $q) {
 
-      $scope.labels = DAService.labels.slice(1); // remove default x-axis label, don't want that in the dropdown menu
-      $scope.showLabels = [];
-      for (var i in $scope.labels) {
-        $scope.showLabels.push(true);
-      }
-      $scope.graphTypes = ['scatter', 'line', 'curve fit'];
-      $scope.xLabels = ['time', 'dosage'] //TODO: NEED TO POPULATE THIS FROM DATA
-      var yCount = 1;
-
-      //$scope.ActiveProject = activeProject.activeId;
-      $scope.filterowner = '';
-
-      for (var w = 0, wLen = DAService.projects.length; w < wLen; w++) {
-        var project = DAService.projects[w];
-        project.selected = true;
-        project.nmbrPlates = DAService.getWells(project.title).length;
-        project.selected = false;
+    
+      var onError = function()
+      {
+        var dAasd  = 123;
       }
 
-      $scope.projects = DAService.projects;
+      var getProjectsFromDB = function()
+      {
+          $http.get("/adam/rest/project/").then(onPrjectRequestComplete, onError);
+      }
 
-      $scope.projectsDisplay = [].concat($scope.projects);
+      getProjectsFromDB();
 
-      $scope.wellCollection = [];
+      var onPrjectRequestComplete = function() 
+      {
+        $scope.labels = DAService.labels.slice(1); // remove default x-axis label, don't want that in the dropdown menu
+        $scope.showLabels = [];
+        for (var i in $scope.labels) 
+        {
+          $scope.showLabels.push(true);
+        }
+        $scope.graphTypes = ['scatter', 'line', 'curve fit'];
+        $scope.xLabels = ['time', 'dosage'] //TODO: NEED TO POPULATE THIS FROM DATA
+        var yCount = 1;
 
-      dsPLACEHOLDER = 'Select data series';
-      gtPLACEHOLDER = 'Select graph type';
-      xPLACEHOLDER = 'Select x-axis variable';
-      $scope.selectedXAxisLabel = xPLACEHOLDER;
-      //DAService.updateData([0], 'setX');
-      DAService.options.labels = ['x-axis', 'y-axis'];
-      var g = new Dygraph(document.getElementById('graph'), [
-        [0, 0],
-        [0, 0]
-      ], DAService.options);
+        //$scope.ActiveProject = activeProject.activeId;
+        $scope.filterowner = '';
 
-      $scope.ySeries = [];
-      $scope.yCount = 1;
+        for (var w = 0, wLen = DAService.projects.length; w < wLen; w++) {
+          var project = DAService.projects[w];
+          project.selected = true;
+          project.nmbrPlates = DAService.getWells(project.title).length;
+          project.selected = false;
+        }
+
+        $scope.projects = DAService.projects;
+
+        $scope.projectsDisplay = [].concat($scope.projects);
+
+        $scope.wellCollection = [];
+
+        dsPLACEHOLDER = 'Select data series';
+        gtPLACEHOLDER = 'Select graph type';
+        xPLACEHOLDER = 'Select x-axis variable';
+        $scope.selectedXAxisLabel = xPLACEHOLDER;
+        //DAService.updateData([0], 'setX');
+        DAService.options.labels = ['x-axis', 'y-axis'];
+        var g = new Dygraph(document.getElementById('graph'), [
+          [0, 0],
+          [0, 0]
+        ], DAService.options);
+
+        $scope.ySeries = [];
+        $scope.yCount = 1;
+
+         for (var index in responce.data)
+         {
+
+              var new_project = 
+              {
+                "title" : data[index].name,
+                "description" : data[index].description,
+                "owner" : data[index].owner,
+                "date" : data[index].creationDate,
+                "id" : data[index].id,
+                "selected" : false
+              }
+              projects.push(new_project);
+          }
+
+          resetDataSeries();
+      }
 
       addDataSeries = function(dsIndex) {
         currID = 'menu-' + dsIndex;
@@ -955,8 +968,6 @@
         DAService.options.series = {};
         DAService.graphIt();
       };
-
-      resetDataSeries();
 
       $scope.addNewYAxisSelectionButton = function() {
         $scope.yCount = $scope.yCount + 1;
@@ -1119,8 +1130,8 @@
 
       $scope.$watch('wellCollection', function() {
         //alert('hey, wellCollection has changed!');
-        var collection = $scope.wellCollection;
-        var length = collection.length;
+        //var collection = $scope.wellCollection;
+        //var length = collection.length;
       });
 
       $scope.updateLabels = function() {

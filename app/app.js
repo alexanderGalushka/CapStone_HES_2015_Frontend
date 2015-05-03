@@ -77,8 +77,7 @@
       }).
       when('/dataanalysis', {
                     templateUrl: 'dataanalysis/data_analysis.html',
-                    controller: 'DropdownCtrl',
-                    controllerAs: 'dataA'
+                    controller: 'DropdownCtrl'
                 }).
       otherwise({
         redirectTo: '/projects'
