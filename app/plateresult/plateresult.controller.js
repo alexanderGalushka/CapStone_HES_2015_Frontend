@@ -8,9 +8,9 @@
     .controller('PlateResultsCtrl',PlateResultsCtrl)
 
 
-  PlateResultsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult" , "Upload", "classgridFilter", "Qc"];
+  PlateResultsCtrl.$inject = ["$scope", "activeProject", "activePlate", "activePlateResult" , "Upload", "classgridFilter", "Qc", "loadActiveResult" ];
 
-  function PlateResultsCtrl($scope, activeProject, activePlate, activePlateResult, Upload, classgrid, Qc) {
+  function PlateResultsCtrl($scope, activeProject, activePlate, activePlateResult, Upload, classgrid, Qc, loadActiveResult) {
     var plresVm = this;
 
     $scope.ActiveProject = activeProject.project;
@@ -36,19 +36,20 @@
             file: file
           }).progress(function (evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            $scope.log = 'progress: ' + progressPercentage + '% ' +
-            evt.config.file.name + '\n' + $scope.log;
+            plresVm.log = 'progress: ' + progressPercentage + '% ' +
+            evt.config.file.name + '\n' + plresVm.log;
           }).success(function (data, status, headers, config) {
-            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
-            $scope.$apply();
+            //plresVm.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + plresVm.log;
+            loadActiveResult(data);
+            //$scope.$apply();
           });
         }
       }
     }
 
     function deleteResult(plateResult){
-      console.log(JSON.stringify(plateResult, null, 4));
       Qc.delete({"id":plateResult.plateId});
+      plateResult.measurements = null;
       plateResult = null;
     }
 
