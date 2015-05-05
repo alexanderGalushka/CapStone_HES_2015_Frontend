@@ -1,0 +1,160 @@
+ADAM
+======
+
+Application has six main pages or components:
+- Projects
+- Plates
+- Plate editor
+- Plate results
+- QC (Quality control)
+- Data Analysis
+
+Code is grouped into folders by functionality:
+app/dataanalysis       - data analysis page
+app/datamodel          - web services
+app/layout             - common layout
+app/plate              - plate page
+app/plateeditor        - plate editor page
+app/plateresult        - plate result page
+app/project            - project page
+app/qc                 - qc page
+app/services           - common services used to share data
+app/styles             - css style
+
+app/app.js             - main module
+app/bower.json         - bower configuration file
+app/index.html         - index page
+app/login.html         - login page
+
+
+Web services
+====================
+Our application uses Angular $resource service to call web services that provides basic RESTful operations by default:
+{ 'get':    {method:'GET'},
+  'save':   {method:'POST'},
+  'query':  {method:'GET', isArray:true},
+  'remove': {method:'DELETE'},
+  'delete': {method:'DELETE'} };
+
+  For each service there is additional service defined to update data. Here is example for projects
+  $resource("http://54.149.197.234/adam/rest/project/:id", {}, {
+            'update': {method: 'PUT'}
+          }
+
+REST services used:
+- rest/project/:id
+  project.data.model.js module
+
+- rest/user/:id
+  collaborator.data.model.js module
+  list users that can be added to project as collaborators
+
+- rest/plate/:id
+  plate.data.model.js module
+  this service represents virtual plate
+
+- rest/qc/plate/:id
+  qc.data.model.js module
+  it represents results collected from instrument for virtual plate
+
+- rest/qc/single_well_validation
+  wellinvalidate.data.model.js module
+  it is used to invalidate well in qc process
+
+
+"Projects" page
+===========================
+Modules:
+app/project/
+    project.controller.js          basic crud operations on projects
+    project.html                   display projects in table
+    aside.edit.project.html        aside page to edit project
+    modal.delete.project.html      delete confirmation screen
+    project.panel.directive.js     panel directive used in other pages to diplay projects
+    project.panel.html             panel in table format
+
+
+"Plate" page
+===========================
+Modules:
+app/plate/
+    aside.edit.plate.html
+    modal.delete.plate.html
+    plate.controller.js
+    plate.html
+    plate.panel.directive.js
+    plate.panel.html
+
+"Plate Editor" page
+===========================
+Modules:
+app/plateeditor/
+    /plotlabels
+        app/plateeditor/plotlabels/plotlabels.directive.js
+        app/plateeditor/plotlabels/plotlabels.html
+    /singlewell
+        app/plateeditor/singlewell/popover.well.edit.html
+        app/plateeditor/singlewell/singlewell.directive.js
+        app/plateeditor/singlewell/singlewell.html
+        app/plateeditor/singlewell/wellattr.filter.js
+    /wellstable
+        app/plateeditor/wellstable/wells.table.directive.js
+        app/plateeditor/wellstable/wells.table.html
+
+    plateeditor.controller.js
+    plateeditor.html
+    plateeditor_test.js
+    resetselection.factrory.js
+
+"Plate result" page
+===========================
+Modules:
+app/plateresult/
+    aside.download.result.html
+    loadactiveresult.factory.js
+    measurments.filter.js
+    modal.delete.result.html
+    plateresult.controller.js
+    plateresult.html
+    transformactiveresult.factory.js
+
+"QC" page
+===========================
+Modules:
+app/qc/
+    qc.controller.js
+    qc.html
+    qcsinglewell.directive.js
+    qcsinglewell.html
+    qcwellattr.filter.js
+    setactivemeasurement.factory.js
+
+"Data analysis" page
+===========================
+Modules:
+app/dataanalysis/
+    data_analysis.html
+    dataanalysis.js
+    dygraph-combined.js
+    dygraph-combined-dev.js
+    dygraph-extra.js
+
+Services
+===========================
+Modules:
+app/services/services.js
+
+Layout
+===========================
+Modules:
+app/layout/
+    class.grid.col.filter.js
+    navbar.directive.js
+    navbaradam.html
+
+
+===========================
+
+
+
+
