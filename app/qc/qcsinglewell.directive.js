@@ -14,7 +14,8 @@
           valuerange:"=",
           projectid:"@",
           plateid:"@",
-          measurementType:"@"
+          measurementtype:"@",
+          sliderindex:"@"
         },
         templateUrl: 'qc/qcsinglewell.html',
         controller: QcSingleWellCtrl,
@@ -23,27 +24,35 @@
       };
     });
 
-  QcSingleWellCtrl.$inject = ["filterQcColorFilter", "filterQcControlFilter", "WellInvalidate", "transformActiveResult"];
-  function QcSingleWellCtrl(filterQcColor, filterQcControl, WellInvalidate, transformActiveResult) {
+  QcSingleWellCtrl.$inject = ["filterQcColorFilter", "filterQcControlFilter", "WellInvalidate", "transformActiveResult", "setActiveMeasurement"];
+  function QcSingleWellCtrl(filterQcColor, filterQcControl, WellInvalidate, transformActiveResult, setActiveMeasurement) {
     var qcsinglewellVm = this;
 
     qcsinglewellVm.toggleIfValid = toggleIfValid;
 
-    function toggleIfValid(well, projectid, plateid, measurementType) {
+    function toggleIfValid(well, projectid, plateid, measurementtype, sliderindex) {
       var plateres;
 
       console.log(JSON.stringify(well, null, 4));
       console.log(projectid);
       console.log(plateid);
+      console.log(measurementtype);
+      console.log(sliderindex);
 
       plateres = WellInvalidate.save({"projectId": projectid,
         "plateId":plateid,
         "rowNum":well.row,
         "colNum":well.col,
-        "ifValid":!well.ifValid});
+        "ifValid":!well.ifValid},function(){
+        /* load returned result into activePlateResult service for sharing between pages */
+        transformActiveResult(plateres);
+        setActiveMeasurement(measurementtype, sliderindex, plateres);
+      }, function(error) {
+        /*  web service threw error */
+        console.log(JSON.stringify(error, null, 4));
+      });
 
 
-      transformActiveResult(plateres);
       //well.ifValid = !well.ifValid;
 
     }

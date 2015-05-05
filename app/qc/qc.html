@@ -32,7 +32,7 @@
         </thead>
         <tbody>
         <tr st-select-row="type" ng-repeat="type in ActivePlateResult.plateResult.measurementTypes"
-            ng-click="qcVm.setActiveMeasurement(type.name,ActivePlateResult.plateResult.valueslider, ActivePlateResult.plateResult)">
+            ng-click="qcVm.callSetActiveMeasurement(type.name,ActivePlateResult.plateResult.valueslider, ActivePlateResult.plateResult)">
           <td>{{type.name}}</td>
         </tr>
         </tbody>
@@ -68,7 +68,7 @@
                                wellcollors="qcVm.wellcollors"  valuerange="ActivePlateResult.plateResult.valuerange"
                                controltypes="ActivePlateResult.plateResult.controlTypes"
                                projectid="{{ActivePlateResult.plateResult.projectId}}" plateid="{{ActivePlateResult.plateResult.plateId}}"
-                               measurementType="ActivePlateResult.plateResult.activeMeasurementType"
+                               measurementtype="{{ActivePlateResult.plateResult.activeMeasurementType}}" sliderindex="{{ActivePlateResult.plateResult.activeMeasurementSliderIndex}}"
                                style="white-space: nowrap;padding:0px;margin:0px;border:0px width:0px;height:0px"></adamhes-qc-single-well><!--
 --></label><!--
 --></div>
@@ -78,7 +78,7 @@
 
     <div class="panel-group {{qcVm.aside | classgrid}}" ng-show="ActivePlateResult.plateResult.options.to > 1">
       <input ng-model="ActivePlateResult.plateResult.valueslider" type="text" id="mySlider1" slider options="ActivePlateResult.plateResult.options"
-             ng-change="qcVm.setActiveMeasurement(ActivePlateResult.plateResult.activeMeasurement.measurementType, ActivePlateResult.plateResult.valueslider, ActivePlateResult.plateResult)"/>
+             ng-change="qcVm.callSetActiveMeasurement(ActivePlateResult.plateResult.activeMeasurement.measurementType, ActivePlateResult.plateResult.valueslider, ActivePlateResult.plateResult)"/>
     </div>
 
     <div class="panel-group {{qcVm.aside | classgrid}}">
