@@ -1,0 +1,51 @@
+Smart Table
+===========================
+
+One of important plugins, we use in application, is  that facilitates all our
+
+data grids. It has several important features:
+
+• pure Angular solution - declarative way
+
+• lightweight - 4K
+
+• easy to configure and customize
+
+• modular and extensible
+
+The Smart Table plugin provides functionality out of box:
+
+• full control of data and cell formats
+
+• Sort data is built in, it is declarative, and you may specify function for sort
+
+• Search can be done globally, by column, or through predicates
+
+• It has select and multiselect row option
+
+• Built in pagination on client side
+
+• It can sync display data with underlying base data operated through remote calls.
+
+• Pipe/ajax plugin allows us to override basic display table operation and call server
+
+instead.
+
+• We can add your own plugin to extend its functionality
+==========================
+
+AngularStrap
+===========================
+
+Another plugin we use through whole application is AngularStrap that is based on
+
+Bootstrap CSS framework. Although, Bootstrap framework provides similar javascript
+
+modules we decided to use AngularStrap module for following reasons:
+
+• pure Angular solution - declarative way
+
+• set of native directives that enables seamless integration of Bootstrap
+
+• no external dependency except the Bootstrap CSS style
+

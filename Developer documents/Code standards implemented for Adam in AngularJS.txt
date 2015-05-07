@@ -1,0 +1,67 @@
+1. File structure by role
+there is dataanalysis folder for all your code. Rule of thumb is that after 7 files in one folder you start creating subfolders.
+
+2. put module type in file name project.js  -->  project.controller.js
+
+3. Add 'adamhes' to elements in html  admahes-navbar  admahesNavbar 
+
+4. Wrap all code in function code because of javascript closure:
+
+(function() {
+  angular.module('navbarAdam',[])
+
+    .directive('admahesNavbar', function() {
+      return {
+        restrict: 'E',
+        scope: {
+
+        },
+        templateUrl: 'layout/navbaradam.html'
+      };
+    })
+
+})();
+
+
+4. Name all anonymous functions
+instead of
+.controller('ProjectsCtrl', function()
+
+.controller('ProjectsCtrl', ProjectsCtrl)
+and define ProjectsCtrl function
+
+
+5. use $inject to identify your route resolver dependencies for Angular components.
+  ProjectsCtrl.$inject = ["$scope","deleteProject", "activeProject", "activePlate", "Project","$http", "$filter"];
+  function ProjectsCtrl($scope, deleteProject, activeProject, activePlate, Project,$http, $filter) {
+
+6. Use controllerAs to allow using 'this' for scope
+
+        $routeProvider.
+          when('/projects', {
+            templateUrl: 'project/project.html',
+            controller: 'ProjectsCtrl',
+            controllerAs: 'projVm'
+          }
+
+so in project controller we have:
+  function ProjectsCtrl($scope, deleteProject, activeProject, activePlate, Project,$http, $filter) {
+    var projVm = this;
+
+    projVm.editProject = editProject;
+    projVm.addNewProject = addNewProject;
+    projVm.saveChangesProject = saveChangesProject;
+    projVm.setActiveProject = setActiveProject;
+    projVm.addTag = addTag;
+    projVm.checkedOwner = checkedOwner;
+    projVm.addCollaborator = addCollaborator;
+
+and used in html
+
+ng-click="projVm.editProject(project)">
+
+
+7. All functions are declared at the beginning of controller so it is more clear what functiionality controller provides.
+
+8. layout folder is for application general view components like navbar
+   datamodel for $resource/server calls to model
