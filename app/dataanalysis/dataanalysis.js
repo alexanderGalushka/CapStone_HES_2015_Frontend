@@ -429,6 +429,8 @@
         return
       };
 
+////////////////////////////////////////////// GRAPH CODE BELOW ////////////////////////////////////////////////
+
       // pulled 4/13/15 from http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
       var min = function(arr) {
         return arr.reduce(function(prev, curr) {
@@ -565,7 +567,7 @@
           dummyLabels.push(i.labelName);
         });
 
-      };
+      };  // end of initializeData()
 
 
       var dataIndices = [];
@@ -630,19 +632,21 @@
           data.push(dummyData[dataIndices[i]]);
           plotLabels.push(dummyLabels[dataIndices[i]]);
         }
-        plotCurveFit(); // add any curve fit lines currently on the graph
-        plotData = transposeMatrix(data);
-
-        // REQUIRED FOR DYGRAPHS X-AXIS TO GENERATE PROPERLY
-        plotData.sort(sortFunc);
 
         // update options
         options.labels = plotLabels;
         options.axes.x.labels = plotLabels.length > 0 ? plotLabels[0] : [];
-        options.axes.x.valueRange = data[0].length > 0 ? [min(data[0]), max(data[0])] : [];
+        // this option lets you put a bit of margin around the graph so that the endpoints aren't on the very edges
+        options.dateWindow = calcXRange(0.5);
+
+        plotCurveFit(); // add any curve fit lines currently on the graph
+
+        plotData = transposeMatrix(data);
+
+        // REQUIRED FOR DYGRAPHS X-AXIS TO GENERATE PROPERLY
+        plotData.sort(sortFunc);
       } // end of setPlotData();
 
-      // TEMPORARY, WILL BE REPLACED BY CALL TO BACKEND
       // pulled from http://trentrichardson.com/2010/04/06/compute-linear-regressions-in-javascript/ on 4/26/15
         function linearRegression(y, x) {
           var lr = {};
@@ -671,46 +675,57 @@
 
       var curveFitLines = [];
       var curveFitEquations = [];
-      for (var i in dummyLabels) {
-        curveFitLines.push([]);
-        curveFitEquations.push('');
-      }
-      var addCurveFit = function(thisLabel) {
-        // get slope and intercept from backend?
-        index = dummyLabels.indexOf(thisLabel);
-        dataIndex = dataIndices.indexOf(index);
-        xData = data[0];
-        yData = data[dataIndex];
-        lr = linearRegression(yData, xData);
-        equation = 'y = ' + lr.slope + 'x';
-        if (lr.intercept > 0) {
-          equation = equation + ' + ' + lr.intercept;
+
+      var initializeCurveFit = function() {
+        for(var i in dummyLabels) {
+          curveFitLines.push([]);
+          curveFitEquations.push('');
         }
-        if (lr.intercept < 0) {
-          equation = equation + ' - ' + Math.abs(lr.intercept);
+    }; // end of initializeCurveFit()
+
+      var addCurveFit = function(thisLabel) {
+        var index = dummyLabels.indexOf(thisLabel);
+        var dataIndex = dataIndices.indexOf(index);
+        var xData = data[0];
+        var yData = data[dataIndex];
+        var lr = linearRegression(yData,xData);
+        // round the slope and intercept to 4 sig figs if necessary
+        lr.slope = (lr.slope - lr.slope.toFixed(4)) === 0 ? lr.slope : lr.slope.toFixed(4);
+        lr.intercept = (lr.intercept - lr.intercept.toFixed(4)) === 0 ? lr.intercept : lr.intercept.toFixed(4);
+        // smart-build the fit equation (i.e., show "y=x" instead of "y=1x+0")
+        var equation = 'y=' + (lr.slope == 0 ? '' : (lr.slope == 1 ? 'x' : (lr.slope + 'x')));
+        if(lr.intercept > 0) {
+          equation = equation + '+' + lr.intercept;
+        }
+        if(lr.intercept < 0) {
+          equation = equation + '-' + Math.abs(lr.intercept);
         }
         curveFitEquations[index] = equation;
-        for (var i in xData) {
+        for(i in xData) {
           curveFitLines[index].push(lr.slope * xData[i] + lr.intercept);
         }
-        plotCurveFit();
+        setPlotData();
       }; // end of addCurveFit()
 
       var removeCurveFit = function(thisLabel) {
-        index = dummyLabels.indexOf(thisLabel);
+        var index = dummyLabels.indexOf(thisLabel);
+        delete options.series[curveFitEquations[index]];
         curveFitLines[index].splice(0, curveFitLines[index].length);
         curveFitEquations[index] = '';
         setPlotData();
       }; // end of removeCurveFit()
 
       var plotCurveFit = function() {
-        for (var i in curveFitLines) {
-          if (i.length > 0) {
+        for(var i in curveFitLines) {
+          if(curveFitLines[i].length > 0) {
             data.push(curveFitLines[i]);
             plotLabels.push(curveFitEquations[i]);
-            options.series[curveFitEquations[i]].strokeWidth = 1.5;
-            options.series[curveFitEquations[i]].drawPoints = false;
-            options.series[curveFitEquations[i]].color = options.series[dummyLabels[i]].color;
+            options.series[curveFitEquations[i]] = {
+              strokeWidth: 1.5,
+              drawPoints: false,
+              color: options.series[dummyLabels[i]].color // this does not work; there is a way, currently not worth the effort
+            };
+            options.dateWindow = calcXRange(0);
           }
         }
       }; // end of plotCurveFit()
@@ -723,16 +738,19 @@
         return false;
       } // end of hasCurveFit()
 
+      var calcXRange = function(margin) {
+        return (data.length > 0 && data[0].length > 0) ? [min(data[0]) - margin, max(data[0]) + margin] : [];
+      };
+
       var options = {
         legend: 'always',
-        //animatedZoom: true,
         title: '',
         drawPoints: true,
         labels: plotLabels,
         axes: {
           x: {
             labels: plotLabels.length > 0 ? plotLabels[0] : [],
-            valueRange: (data.length > 0 && data[0].length > 0) ? [min(data[0]), max(data[0])] : []
+            dateWindow: calcXRange(0.5)
           },
           y: {}
         },
@@ -740,12 +758,13 @@
       };
 
       var graphIt = function() {
-        //options.xlabel = "Time (minutes)";
         if (plotData.length != 0) {
-          g = new Dygraph(document.getElementById('graph'), plotData, options);
+          var g = new Dygraph(document.getElementById('graph'), plotData, options);
           return g;
         }
       };
+
+////////////////////////////////////////////// GRAPH CODE ABOVE ////////////////////////////////////////////////
 
       var clearLabels = function() {
         grid_labels.splice(0, grid_labels.length);
@@ -826,6 +845,7 @@
         'addMeasurementTypeIfDoesNotExist': addMeasurementTypeIfDoesNotExist,
         'measurementTypes': measurementTypes,
         'initializeData': initializeData,
+        'initializeCurveFit': initializeCurveFit,
         "map_project_wells": map_project_wells
       };
     }
@@ -833,10 +853,10 @@
 
   //var dataAnalysisModule = angular.module('dataAnalysis', ['ui.bootstrap']);
 
-  var DUMMYDEFAULTDATASERIESTOPLOT = [7, 8, 9];
+  //var DUMMYDEFAULTDATASERIESTOPLOT = [7, 8, 9];
 
   app.controller('DropdownCtrl', ['$scope', '$log', 'DAService', '$http', '$q',
-    function($scope, $log, DAService, $http, $q) {
+    function($scope, $log, DAService, deleteProject, activeProject, setActiveProject) {
 
       dsPLACEHOLDER = 'Select data series';
       gtPLACEHOLDER = 'Select graph type';
@@ -862,7 +882,7 @@
         for(i in $scope.labels) {
           $scope.showLabels.push(true);
         }
-        $scope.graphTypes = ['scatter', 'line', 'curve fit'];
+        $scope.graphTypes = ['scatter', 'line', 'regression'];
         $scope.xLabels = ['time', 'dosage'] //TODO: NEED TO POPULATE THIS FROM DATA
         var yCount = 1;
 
@@ -888,12 +908,13 @@
         $scope.selectedXAxisLabel = xPLACEHOLDER;
         //DAService.updateData([0], 'setX');
         DAService.options.labels = ['x-axis','y-axis'];
-        var g = new Dygraph(document.getElementById('graph'), [[0,0],[0,0]],  DAService.options);
+//        var g = new Dygraph(document.getElementById('graph'), [[0,0],[0,0]],  DAService.options);
 
         $scope.ySeries = [];
         $scope.yCount = 1;
         
         DAService.initializeData();
+        DAService.initializeCurveFit();
 
         resetDataSeries();
       }
@@ -922,7 +943,7 @@
       getProjectsFromDB();
 
       addDataSeries = function(dsIndex) {
-        currID = 'menu-' + dsIndex;
+        var currID = 'menu-' + dsIndex;
         $scope.ySeries.push({
           id: currID,
           label: dsPLACEHOLDER,
@@ -933,6 +954,12 @@
       resetDataSeries = function() {
         $scope.yCount = 1;
         $scope.labels = DAService.labels.slice(1);
+        for(var i in $scope.labels) {
+          $scope.showLabels[i] = true;
+          if(DAService.hasCurveFit($scope.labels[i])) {
+            DAService.removeCurveFit($scope.labels[i]);
+          }
+        }
         $scope.ySeries.splice(0, $scope.ySeries.length);
         addDataSeries($scope.yCount);
         DAService.updateData(DAService.genSeq(1, $scope.labels.length, 1), 'setY');
@@ -941,15 +968,17 @@
       };
 
       $scope.addNewYAxisSelectionButton = function() {
-        $scope.yCount = $scope.yCount + 1;
-        addDataSeries($scope.yCount);
+        if($scope.ySeries[$scope.yCount - 1].label != dsPLACEHOLDER) {
+          $scope.yCount = $scope.yCount + 1;
+          addDataSeries($scope.yCount);
+        }
       };
 
       $scope.removeYAxisSelectionButton = function(IDofButtonToRemove) {
         if ($scope.yCount > 1) {
           $scope.yCount = $scope.yCount - 1;
-          spliceIndex = -1;
-          labelToRemove = '';
+          var spliceIndex = -1;
+          var labelToRemove = '';
           for (var i in $scope.ySeries) {
             if ($scope.ySeries[i].id == IDofButtonToRemove) {
               spliceIndex = i;
@@ -964,6 +993,9 @@
             DAService.updateData([DAService.labels.indexOf($scope.ySeries[spliceIndex].label)], 'remove');
             $scope.ySeries.splice(spliceIndex, 1);
           }
+          if(DAService.hasCurveFit(labelToRemove)) {
+            DAService.removeCurveFit(labelToRemove);
+          }
           delete DAService.options.series[labelToRemove];
 
           DAService.graphIt();
@@ -973,38 +1005,44 @@
       };
 
       $scope.setYAxisData = function(ID, label) {
-        index = ID.split('-')[1] - 1;
-        labelIndex = $scope.labels.indexOf(label);
+        var index = ID.split('-')[1] - 1;
+        var labelIndex = $scope.labels.indexOf(label);
 
         if (ID == 'menu-1') { // if it's the first menu, never add data
           if ($scope.ySeries[index].label == dsPLACEHOLDER) { // if first menu and never previously set, completely replace data
             DAService.updateData([DAService.labels.indexOf(label)], 'setY');
             DAService.options.series = {};
           } else { // if first menu has data series already, just replace it
-            currLabel = $scope.ySeries[index].label;
+            var currLabel = $scope.ySeries[index].label;
             DAService.updateData(
               [
                 DAService.labels.indexOf(currLabel), // current index
                 DAService.labels.indexOf(label) // new index
               ],
               'replace');
+            if(DAService.hasCurveFit(currLabel)) {
+              DAService.removeCurveFit(currLabel);
+            }
             delete DAService.options.series[currLabel];
-            currLabelIndex = $scope.labels.indexOf(currLabel);
+            var currLabelIndex = $scope.labels.indexOf(currLabel);
             $scope.showLabels[currLabelIndex] = true;
           }
         } else { // if not first menu, never completely replace data
           if ($scope.ySeries[index].label == dsPLACEHOLDER) { // if never previously set, just add data
             DAService.updateData([DAService.labels.indexOf(label)], 'add');
           } else { // if has data series already, just replace it
-            currLabel = $scope.ySeries[index].label;
+            var currLabel = $scope.ySeries[index].label;
             DAService.updateData(
               [
                 DAService.labels.indexOf(currLabel), // current index
                 DAService.labels.indexOf(label) // new index
               ],
               'replace');
+            if(DAService.hasCurveFit(currLabel)) {
+              DAService.removeCurveFit(currLabel);
+            }
             delete DAService.options.series[currLabel];
-            currLabelIndex = $scope.labels.indexOf(currLabel);
+            var currLabelIndex = $scope.labels.indexOf(currLabel);
             $scope.showLabels[currLabelIndex] = true;
           }
         }
@@ -1013,6 +1051,7 @@
         $scope.ySeries[index].label = label;
         $scope.showLabels[labelIndex] = false;
         DAService.options.series[label] = {};
+        $scope.setYAxisGraphType(ID, $scope.ySeries[index].type);
 
         DAService.graphIt();
       };
@@ -1026,34 +1065,41 @@
           $scope.ySeries[index].type = type;
           if (DAService.options.series.hasOwnProperty(thisLabel)) {
 
-            switch (type) {
+            switch(type) {
               case 'scatter':
-                if (DAService.hasCurveFit(thisLabel)) {
+                if(DAService.hasCurveFit(thisLabel)) {
                   DAService.removeCurveFit(thisLabel);
                 }
-                DAService.options.series[thisLabel].strokeWidth = 0.0;
-                DAService.options.series[thisLabel].pointSize = 3;
+                DAService.options.series[thisLabel] = {
+                  strokeWidth: 0.0,
+                  pointSize: 3
+                };
                 break;
               case 'bar':
-                if (DAService.hasCurveFit(thisLabel)) {
+                if(DAService.hasCurveFit(thisLabel)) {
                   DAService.removeCurveFit(thisLabel);
                 }
-                break;
-              case 'curve fit':
-                if (!DAService.hasCurveFit(thisLabel)) {
-                  DAService.options.series[thisLabel].strokeWidth = 0.0;
-                  DAService.options.series[thisLabel].pointSize = 4;
-                  DAService.addCurveFit(thisLabel);
+                break;            
+              case 'regression':
+                if(DAService.hasCurveFit(thisLabel)) {
+                  DAService.removeCurveFit(thisLabel);
                 }
+                DAService.options.series[thisLabel] = {
+                  strokeWidth: 0.0,
+                  pointSize: 3
+                };
+                DAService.addCurveFit(thisLabel);
                 break;
               case 'line':
-                if (DAService.hasCurveFit(thisLabel)) {
+              default:
+                if(DAService.hasCurveFit(thisLabel)) {
                   DAService.removeCurveFit(thisLabel);
                 }
-                DAService.options.series[thisLabel].strokeWidth = 1.0;
-                DAService.options.series[thisLabel].pointSize = 2;
+                DAService.options.series[thisLabel] = {
+                  strokeWidth: 1.0,
+                  pointSize: 2
+                };
                 break;
-              default:
             }
 
             DAService.graphIt();
@@ -1064,6 +1110,11 @@
       $scope.setXAxisData = function(label) {
         $scope.selectedXAxisLabel = label;
         DAService.updateData([DAService.labels.indexOf(label)], 'setX');
+        $scope.ySeries.forEach(function(series) {
+          if(series.type == 'regression') {
+            $scope.setYAxisGraphType(series.id, series.type);
+          }
+        });
         DAService.graphIt();
       };
 
@@ -1231,7 +1282,7 @@
         }
 
         DAService.initializeData();
-
+        DAService.initializeCurveFit();
         //$scope.ySeries.splice(1, $scope.ySeries.length);
 
         resetDataSeries();
