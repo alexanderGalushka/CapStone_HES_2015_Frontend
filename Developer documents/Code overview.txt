@@ -70,7 +70,7 @@ app/project/
     project.html                   display projects in table
     aside.edit.project.html        aside page to edit project
     modal.delete.project.html      delete confirmation screen
-    project.panel.directive.js     panel directive used in other pages to diplay projects
+    project.panel.directive.js     panel directive used in other pages to display projects
     project.panel.html             panel in table format
 
 
@@ -78,12 +78,12 @@ app/project/
 ===========================
 Modules:
 app/plate/
-    aside.edit.plate.html
-    modal.delete.plate.html
-    plate.controller.js
-    plate.html
-    plate.panel.directive.js
-    plate.panel.html
+    plate.controller.js           basic crud operations on plates
+    plate.html                    display plates in table
+    aside.edit.plate.html         aside page to edit plate
+    modal.delete.plate.html       delete confirmation screen
+    plate.panel.directive.js      panel directive used in other pages to display plates
+    plate.panel.html              panel in table format
 
 "Plate Editor" page
 ===========================
