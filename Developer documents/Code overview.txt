@@ -89,22 +89,21 @@ app/plate/
 ===========================
 Modules:
 app/plateeditor/
-    /plotlabels
-        app/plateeditor/plotlabels/plotlabels.directive.js
-        app/plateeditor/plotlabels/plotlabels.html
-    /singlewell
-        app/plateeditor/singlewell/popover.well.edit.html
-        app/plateeditor/singlewell/singlewell.directive.js
-        app/plateeditor/singlewell/singlewell.html
-        app/plateeditor/singlewell/wellattr.filter.js
-    /wellstable
-        app/plateeditor/wellstable/wells.table.directive.js
-        app/plateeditor/wellstable/wells.table.html
+    /plotlabels                                               directive used to plot labels on plate map
+        app/plateeditor/plotlabels/plotlabels.directive.js    directive
+        app/plateeditor/plotlabels/plotlabels.html            html that shows the list of labels with colors
+    /singlewell                                               single well on plate map in plate editor page
+        app/plateeditor/singlewell/popover.well.edit.html     popover page used to edit well field
+        app/plateeditor/singlewell/singlewell.directive.js    directive for single well
+        app/plateeditor/singlewell/singlewell.html            html for single well
+        app/plateeditor/singlewell/wellattr.filter.js         set of filters used for drawing single well
+    /wellstable                                               smart table used to displat well's attributes
+        app/plateeditor/wellstable/wells.table.directive.js   directive to wells table
+        app/plateeditor/wellstable/wells.table.html           html for wells table
 
-    plateeditor.controller.js
-    plateeditor.html
-    plateeditor_test.js
-    resetselection.factrory.js
+    plateeditor.controller.js                                 controller for plate editor
+    plateeditor.html                                          html for plate editor, container for set of directives above, and panels
+    resetselection.factrory.js                                function used to reset or unselect wells
 
 "Plate result" page
 ===========================
