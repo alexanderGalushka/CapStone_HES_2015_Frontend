@@ -39,6 +39,13 @@
 
     qcsinglewellVm.toggleIfValid = toggleIfValid;
 
+    /**
+     * @ngdoc function
+     * @name toggleIfValid
+     * @description
+     * Switch ifValid field in plate result
+     *
+     */
     function toggleIfValid(well, projectid, plateid, measurementtype, sliderindex) {
       var plateres;
 
@@ -60,9 +67,6 @@
         /*  web service threw error */
         console.log(JSON.stringify(error, null, 4));
       });
-
-
-      //well.ifValid = !well.ifValid;
 
     }
 
