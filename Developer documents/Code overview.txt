@@ -141,15 +141,15 @@ app/dataanalysis/
 Services
 ===========================
 Modules:
-app/services/services.js
+app/services/services.js                                    active* objects represent individual database object displayed on page
 
 Layout
 ===========================
 Modules:
 app/layout/
-    class.grid.col.filter.js
-    navbar.directive.js
-    navbaradam.html
+    class.grid.col.filter.js                                Filter that update div class to adjust layout according to open left panels
+    navbar.directive.js                                     Directive for top window application navigation bar
+    navbaradam.html                                         Html for navigation bar
 
 
 ===========================
