@@ -21,7 +21,7 @@
     return function (plateid){
       var plateres;
 
-      //
+      // call web service
       plateres = Qc.get({"id": plateid},function(){
           /* load result into activePlateResult service for sharing between pages */
           transformActiveResult(plateres);
