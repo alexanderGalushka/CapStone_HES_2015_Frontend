@@ -1,4 +1,4 @@
-Smart Table
+Smart Table     smart-table in app.js
 ===========================
 
 One of important plugins, we use in application, is  that facilitates all our
@@ -34,7 +34,7 @@ instead.
 • We can add your own plugin to extend its functionality
 ==========================
 
-AngularStrap
+AngularStrap      mgcrea.ngStrap in app.js
 ===========================
 
 Another plugin we use through whole application is AngularStrap that is based on
@@ -48,4 +48,23 @@ modules we decided to use AngularStrap module for following reasons:
 • set of native directives that enables seamless integration of Bootstrap
 
 • no external dependency except the Bootstrap CSS style
+
+===========================
+
+AngularJS directive slider control - ngSlider in app.js
+===========================
+Slider directive implementation for AngularJS, without jQuery dependencies
+
+===========================
+
+ngFileUpload in app.js
+===========================
+Lightweight Angular JS directive to upload files.
+
+Features:
+Supports upload progress, cancel/abort upload while in progress, File drag and drop (html5), Directory drag and drop (webkit), CORS, PUT(html5)/POST methods, validation of file type and size, show preview of selected images/audio/videos.
+Cross browser file upload and FileReader (HTML5 and non-HTML5) with Flash polyfill FileAPI. Allows client side validation/modification before uploading the file
+Direct upload to db services CouchDB, imgur, etc... with file's content type using Upload.http(). This enables progress event for angular http POST/PUT requests.
+Seperate shim file, FileAPI files are loaded on demand for non-HTML5 code meaning no extra load/code if you just need HTML5 support.
+Lightweight using regular $http to upload (with shim for non-HTML5 browsers) so all angular $http features are available
 
