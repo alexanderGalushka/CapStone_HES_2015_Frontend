@@ -110,7 +110,7 @@ app/plateeditor/
 Modules:
 app/plateresult/
     aside.download.result.html                               side html page to upload result file into server
-    loadactiveresult.factory.js                              upload result file into server
+    loadactiveresult.factory.js                              load result file from server
     measurments.filter.js                                    not used
     modal.delete.result.html                                 modal html page to confirm result deletion
     plateresult.controller.js                                controller for plate result page

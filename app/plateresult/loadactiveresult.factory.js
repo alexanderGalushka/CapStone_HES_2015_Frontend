@@ -5,7 +5,7 @@
  * @name loadactiveresult.factory:loadActiveResult
  * @description
  * # loadActiveResult
- * Upload result file into server
+ * Load result file from server
  *
  */
 
@@ -21,6 +21,7 @@
     return function (plateid){
       var plateres;
 
+      //
       plateres = Qc.get({"id": plateid},function(){
           /* load result into activePlateResult service for sharing between pages */
           transformActiveResult(plateres);
