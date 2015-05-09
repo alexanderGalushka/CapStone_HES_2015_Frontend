@@ -109,24 +109,24 @@ app/plateeditor/
 ===========================
 Modules:
 app/plateresult/
-    aside.download.result.html
-    loadactiveresult.factory.js
-    measurments.filter.js
-    modal.delete.result.html
-    plateresult.controller.js
-    plateresult.html
-    transformactiveresult.factory.js
+    aside.download.result.html                               side html page to upload result file into server
+    loadactiveresult.factory.js                              upload result file into server
+    measurments.filter.js                                    not used
+    modal.delete.result.html                                 modal html page to confirm result deletion
+    plateresult.controller.js                                controller for plate result page
+    plateresult.html                                         html for plate result page
+    transformactiveresult.factory.js                         factory that adds necessary details to plate result object used in display
 
 "QC" page
 ===========================
 Modules:
 app/qc/
-    qc.controller.js
-    qc.html
-    qcsinglewell.directive.js
-    qcsinglewell.html
-    qcwellattr.filter.js
-    setactivemeasurement.factory.js
+    qc.controller.js                                         controller for Qc page
+    qc.html                                                  html for qc page
+    qcsinglewell.directive.js                                directive for single well in plate map in qc page
+    qcsinglewell.html                                        html for single well in plate map in qc page
+    qcwellattr.filter.js                                     filters for single well in plate map in qc page
+    setactivemeasurement.factory.js                          factory to set active measurment in qc page
 
 "Data analysis" page
 ===========================
@@ -147,9 +147,9 @@ Layout
 ===========================
 Modules:
 app/layout/
-    class.grid.col.filter.js                                Filter that update div class to adjust layout according to open left panels
-    navbar.directive.js                                     Directive for top window application navigation bar
-    navbaradam.html                                         Html for navigation bar
+    class.grid.col.filter.js                                filter that update div class to adjust layout according to open left panels
+    navbar.directive.js                                     directive for top window application navigation bar
+    navbaradam.html                                         html for navigation bar
 
 
 ===========================

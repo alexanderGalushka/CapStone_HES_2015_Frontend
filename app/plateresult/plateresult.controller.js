@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name plateresult.directive:PlateResultsCtrl
+ * @description
+ * # PlateResultsCtrl
+ * Controller for plate result page
+ *
+ */
+
 (function() {
 
 

@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name qcsinglewell.directive:adamhesQcSingleWell
+ * @description
+ * # adamhesQcSingleWell
+ * Directive for single well in plate map in qc page
+ *
+ */
+
 (function() {
   angular.module('qcsinglewell', ['ngAnimate','ngSanitize', 'smart-table','mgcrea.ngStrap'])
 

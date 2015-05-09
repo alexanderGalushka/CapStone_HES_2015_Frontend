@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * @ngdoc function
+ * @name setactivemeasurement.factory:setActiveMeasurement
+ * @description
+ * # setActiveMeasurement
+ * Factory to set active measurment in qc page
+ *
+ */
+
 (function() {
 
   angular.module('setactivemeasurement', [])

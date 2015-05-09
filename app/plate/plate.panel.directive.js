@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name plate.panel.directive:admahesPlatepanel
+ * @description
+ * # admahesPlatepanel
+ * Panel directive used in other pages to display plates
+ *
+ */
+
 (function() {
   angular.module('platepanel', ['ngAnimate','ngSanitize', 'smart-table','mgcrea.ngStrap'])
 

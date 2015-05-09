@@ -1,5 +1,15 @@
 'use strict';
 
+/**
+ * @ngdoc function
+ * @name loadactiveresult.factory:loadActiveResult
+ * @description
+ * # loadActiveResult
+ * Upload result file into server
+ *
+ */
+
+
 (function() {
 
   angular.module('loadresult', [])

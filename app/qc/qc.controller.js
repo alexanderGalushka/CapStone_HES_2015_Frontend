@@ -1,4 +1,12 @@
 'use strict';
+/**
+ * @ngdoc function
+ * @name qc.controller:QcCtrl
+ * @description
+ * # QcCtrl
+ * Controller for Qc page
+ *
+ */
 
 (function() {
 

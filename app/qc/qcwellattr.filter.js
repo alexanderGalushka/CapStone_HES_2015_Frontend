@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * @ngdoc filter
+ * @name qcwellattr.filter:filterQcColor
+ * @description
+ * # adamhesQcSingleWell
+ * Filters for single well in plate map in qc page
+ *
+ */
+
 (function() {
 
   angular.module('qcwellattrfilter', [])
