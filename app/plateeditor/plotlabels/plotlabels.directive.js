@@ -1,5 +1,14 @@
 'use strict';
 
+/**
+ * @ngdoc directive
+ * @name plotlabels.directive:adamhesPlotlabels
+ * @description
+ * # adamhesPlotlabels
+ * Directive used to plot labels on plate map
+ *
+ */
+
 (function() {
   angular.module('plotlabels', ['ngAnimate','ngSanitize', 'smart-table','mgcrea.ngStrap'])
 
