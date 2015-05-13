@@ -48,7 +48,7 @@
           var file = files[i];
           // calls ngFileUpload Upload object to upload file to server adam/upload_result
           Upload.upload({
-            url: 'http://54.149.197.234/adam/upload_result',
+            url: '/adam/upload_result',
             fields: {
               'plate_id': plateid
             },
